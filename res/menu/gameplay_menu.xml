@@ -1,0 +1,27 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <item
+        android:id="@+id/change_difficulty"        
+        android:showAsAction="ifRoom"
+        android:title="@string/change_difficulty"
+        android:visible="true" 
+        android:enabled="true"/>
+    <item android:id="@+id/reshuffle" 
+        android:title="@string/reshuffle" 
+        android:visible="true" 
+        android:enabled="true"
+        android:showAsAction="always"></item>
+    <item android:id="@+id/back_to_select"
+        android:title="@string/back_to_select" 
+        android:visible="true" 
+        android:enabled="true"
+        android:showAsAction="ifRoom"
+        ></item>
+    <item android:id="@+id/solve"
+        android:title="@string/solve_for_me"
+        android:showAsAction="always"
+        android:visible="true"
+        android:orderInCategory="100"
+        ></item>
+		
+</menu>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">N-Puzzle</string>
+    <string name="action_settings">Change Difficulty</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="click_me_">Click me!</string>
+    <string name="here_is_your_answer">Here is your answer</string>
+    <string name="title_activity_game_screen">GameScreen</string>
+
+    <string-array name="difficulties">
+        <item>"Easy"</item>
+        <item>"Medium"</item>
+        <item>"Hard"</item>
+        </string-array>
+       
+       <string name="victory_text">YOU ARE THE WINNER!</string>
+       <string name="change_difficulty">Change Difficulty</string>
+       <string name="reshuffle">Reset</string>
+       <string name="back_to_select">Back to Select</string>
+       <string name="solve_for_me">Solve it for me!</string>
+       <string name="difficulty_menu_title">Pick a difficulty</string>
+       <string name="difficulty_preference_key">last_difficulty</string>
+       <string name="n_puzzle_preferences_filename">n_puzzle_preferences</string>
+</resources>
