@@ -19,7 +19,6 @@ public class SolveGameTask extends AsyncTask<Integer, Long, Node> {
     private long mStartTime;
     private Solver mSolver;
     private GamePlayActivity mContext;
-    private SolutionStrategy mStrategy;
 
     /**If the thread runs longer than this amount, it stops itself.
      * Solving a goal should not take this long.
@@ -29,12 +28,9 @@ public class SolveGameTask extends AsyncTask<Integer, Long, Node> {
     //hide default constructor
     private SolveGameTask(){}
 
-    public SolveGameTask(GamePlayActivity context, SolutionStrategy strategy, GameState gameState){
+    public SolveGameTask(GamePlayActivity context, Heuristic heuristic,
+            ArrayList<Point> frozenTiles, GameState gameState){
         mContext = context;
-        mStrategy = strategy;
-
-        Heuristic heuristic = strategy.getNextGoal();
-        ArrayList<Point> frozenTiles = strategy.getFrozenTiles();
 
         //strategy is out of goals
         if(heuristic == null){

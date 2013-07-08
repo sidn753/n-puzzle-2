@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Point;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -17,6 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.util.Log;
 import com.example.n_puzzle.DifficultyManager.DifficultyManagerCaller;
+import com.example.n_puzzle.Solver.Heuristics.Heuristic;
 import com.example.n_puzzle.Solver.Node;
 import com.example.n_puzzle.Solver.MoveMaker;
 import com.example.n_puzzle.Solver.MoveQueue;
@@ -206,7 +208,10 @@ public class GamePlayActivity extends Activity implements DifficultyManagerCalle
 
     public void solveNextTask(GameState gameState){
 
-        mSolveTask = new SolveGameTask(this, mSolutionStrategy, gameState);
+        Heuristic heuristic = mSolutionStrategy.getNextGoal();
+        ArrayList<Point> frozenTiles = mSolutionStrategy.getFrozenTiles();
+
+        mSolveTask = new SolveGameTask(this, heuristic, frozenTiles, gameState);
         mSolveTask.execute();
     }
 
@@ -214,9 +219,10 @@ public class GamePlayActivity extends Activity implements DifficultyManagerCalle
 
         Log.d(TAG, "Solver finished. adding moves to MoveQueue");
 
-        mMoveQueue.addAll(result.getMoveQueue());
-        mSolutionStrategy.goalSolved();
 
+        mSolutionStrategy.processSolvedGoal();
+
+        mMoveQueue.addAll(result.getMoveQueue());
         GameState endState = result.getEndState();
 
         /*If we're solving the end of a row, append the row end maneuver
@@ -231,9 +237,15 @@ public class GamePlayActivity extends Activity implements DifficultyManagerCalle
 
     public GameState appendLineEndManeuver(GameState endState){
 
+        Log.d(TAG, "Adding line end maneuver");
         MoveQueue maneuver = mSolutionStrategy.lineEndManeuver();
         mMoveQueue.addAll(maneuver);
 
+        /*The beginning state for the next goal will be different due
+        to the line end maneuver that we're appending. So we virtually
+        perform each move in the maneuver on the previous endstate,
+        and use the final state as the beginning state for the next goal.
+         */
         for(GameState.Direction move : maneuver){
             Log.d(TAG, "Adding move to movequeue: " + move);
 
@@ -245,9 +257,7 @@ public class GamePlayActivity extends Activity implements DifficultyManagerCalle
             }
             endState = nextState;
         }
-
         return endState;
-
     }
 
 
@@ -265,9 +275,10 @@ public class GamePlayActivity extends Activity implements DifficultyManagerCalle
 
 		switch(itemId){
 			case R.id.reshuffle:
-				mGameGrid.putDefaultPlacement();
-                mNumMoves = 0;
-                restartSolving();
+				Intent restartIntent = new Intent(this, GamePlayActivity.class);
+                restartIntent.setData(getIntent().getData());
+                this.finish();
+                startActivity(restartIntent);
 				break;
 			case R.id.back_to_select:
 				backToSelect();
@@ -285,7 +296,7 @@ public class GamePlayActivity extends Activity implements DifficultyManagerCalle
 ///////////////////////////////////////////////////////////////////////////
 //Move Maker
 //////////////////////////////////////////////////////////////////////////
-    /**Have the solver AI solve the game
+    /**Have the solver AI solve the game in real time
      */
     private void startMoveMaker() {
         mGameGrid.toggleSolveMode();
@@ -356,8 +367,9 @@ public class GamePlayActivity extends Activity implements DifficultyManagerCalle
 	 * The game will retrieve the new difficulty from sharedPreferences when it starts.*/
 	public void handleDifficultySelection(String newDifficulty) {
 		DifficultyManager.makeDifficultyChangedToast(this, newDifficulty).show();
-		freeMemory();
-		startPreview();
+        Intent restartIntent = new Intent(this, GamePlayActivity.class);
+        restartIntent.setData(getIntent().getData());
+        startActivity(restartIntent);
 	}
 
 

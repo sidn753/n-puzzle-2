@@ -76,7 +76,7 @@ public class BlankToTarget extends Heuristic {
         return result;
     }
 
-    /**If the blank tile is
+    /**If the blank tile is in it's directed place, the goal is solved.
      *
      * @param futureState
      * @return

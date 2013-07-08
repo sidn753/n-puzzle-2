@@ -33,27 +33,63 @@ public class SolutionStrategy {
     private int indexToSolve = 0;
     private boolean moveBlank = true;
 
+    /**During line end maneuvers, you have to
+     * temporarily freeze the index to solve in a
+     * place where it doesn't belong, and
+     * then unfreeze it once the maneuver is over.
+     */
+    private Point temporaryFreeze;
+
     public SolutionStrategy(GameState gameState, DifficultyManager.Difficulty difficulty){
         ROW_LENGTH = difficulty.getNumDivisions();
         COL_LENGTH = ROW_LENGTH;
         mFrozenTiles = new ArrayList<Point>();
+
+        indexToSolve = getFirstUnsolvedIndex(gameState);
+
     }
+
+    public int getFirstUnsolvedIndex(GameState gameState){
+        int index = 0;
+
+        for(int i = 0; i < gameState.getNumTiles(); i++){
+            Point correct = GameState.getCorrectLocationForIndex(i, ROW_LENGTH);
+            Point actual = gameState.getLocation(i);
+            if(!correct.equals(actual)){
+                break;
+            }
+
+            //freeze the index so that it doesn't get moved
+            Log.d(TAG, index + " is already solved, freezing");
+            freezeIndex(index);
+            index++;
+        }
+        return index;
+    }
+
 
     public Heuristic getNextGoal(){
         Heuristic nextHeuristic = null;
 
         if(moveBlank){
 
-            if(indexToSolve == ROW_LENGTH * COL_LENGTH) return new SolveLast6();
-
+            //this indicates that everything has been solved, including the last 6 tiles
             if(indexToSolve > ROW_LENGTH * COL_LENGTH){
                 Log.d(TAG, "Solved everything, solver stopping");
                 return null;
             }
 
-            //getByLocation blank tile in place for row end maneuver
+            //Get blank tile in place for row end maneuver
             if(atEndOfRow){
+
+                //Inserting a tile into the end of a row
+                //requires the blank tile to be below the tile two
+                //spaces to the left of the insertion point.
                 int indexToPutBlankBelow = lastIndexSolved - 2;
+
+                //temporarily freeze the place where the indexTo Solve is
+                freezeTemp(lastIndexSolved);
+
                 nextHeuristic = new BlankToTarget(indexToPutBlankBelow, GameState.Direction.DOWN);
                 Log.d(TAG, "End of row: Getting blank tile below index " +
                     indexToPutBlankBelow);
@@ -62,18 +98,31 @@ public class SolutionStrategy {
             else if(atEndOfCol){
                 //Put the blank tile directly to the right of the index to solve
                 int indexToPutBlankBeside = lastIndexSolved;
+
+                //temporarily freeze the place where the indexTo Solve is
+                freezeTemp(lastIndexSolved);
+
                 nextHeuristic = new BlankToTarget(indexToPutBlankBeside, GameState.Direction.RIGHT);
                 Log.d(TAG, "End of col: Getting blank tile beside index " +
                     indexToPutBlankBeside);
             }
+
+            //This indicates that every tile has been checked.
+            //The only thing left to solve is the last 6 tiles.
+            else if(indexToSolve == ROW_LENGTH * COL_LENGTH){
+                return new SolveLast6();
+            }
+
             else{
                 nextHeuristic = new BlankToTarget(indexToSolve, GameState.Direction.UP);
                 Log.d(TAG, "Getting blank tile to index " + indexToSolve);
             }
         }
 
+
+        //moveBlank false
         else{
-            if(indexToSolve > ROW_LENGTH * COL_LENGTH) return null;
+            if(indexToSolve >= ROW_LENGTH * COL_LENGTH) return null;
 
             Point destination = GameState.getCorrectLocationForIndex(indexToSolve, ROW_LENGTH);
 
@@ -106,17 +155,14 @@ public class SolutionStrategy {
      * we getByLocation the blank tile adjacent to it-
      * This makes it easier to move the tile.
      */
-    public void goalSolved(){
+    public void processSolvedGoal(){
         if(moveBlank){
             moveBlank = false;
-
-            if(readyForLineEndManeuver()){
-
-            }
         }
         else{
             lastIndexSolved = indexToSolve;
-            freezeCurrentIndex();
+            freezeIndex(indexToSolve);
+            getNextIndex();
             moveBlank = true;
         }
 
@@ -124,15 +170,27 @@ public class SolutionStrategy {
     }
 
 
-
+//////////////////////////////////////////////////////////////////////////
+//Freezing and unfreezing
+//////////////////////////////////////////////////////////////////////////
     /**After a goal has been solved, freeze the tile so it is no longer
      * moved in subsequent solutions. Only the last 6 tiles remain unfrozen.
      * The line end maneuvers bypass the frozen tiles restriction, but leave
      * the tiles in their frozen places when complete.
      */
-    private void freezeCurrentIndex(){
-        Point pointToFreeze = GameState.getCorrectLocationForIndex(indexToSolve, ROW_LENGTH);
+    private void freezeIndex(int index){
+        Point pointToFreeze = GameState.getCorrectLocationForIndex(index, ROW_LENGTH);
 
+        if(pointToFreeze == null) return;
+
+        Log.d(TAG, "Freezing point (R, C) " + pointToFreeze.y + ", " +pointToFreeze.x);
+
+        if(!mFrozenTiles.contains(pointToFreeze))
+            mFrozenTiles.add(pointToFreeze);
+
+    }
+
+    public void getNextIndex(){
         indexToSolve++;
 
         //skip tiles in the last 6
@@ -140,10 +198,41 @@ public class SolutionStrategy {
             Log.d(TAG, indexToSolve + " is in the last 6 tiles, skipping it.");
             indexToSolve++;
         }
+    }
 
-        Log.d(TAG, "Freezing point (R, C) " + pointToFreeze.y + ", " +pointToFreeze.x);
+    /**When inserting into the end of a line, the tile to insert is placed adjacent to
+     * the desired location. Then the blank tile is moved into place.
+     *
+     * While the blank tile is being moved, the tile to insert has to stay in its place.
+     * So we freeze the tile to insert in place while the blank tile is being moved into place.
+     *
+     * @param index the tile that is being inserted.
+     */
+    private void freezeTemp(int index){
+        Point pointToFreeze = GameState.getCorrectLocationForIndex(index, ROW_LENGTH);
+
+        //Inserting at end of row- the tile is placed below where it wants to be
+        if(atEndOfRow){
+            pointToFreeze.y = pointToFreeze.y + 1;
+        }
+
+        //Inserting at end of col- the tile is placed to the right of where it wants to be
+        else if(atEndOfCol){
+            pointToFreeze.x = pointToFreeze.x + 1;
+        }
+
+        Log.d(TAG, "Temporary freeze (R, C) "+ pointToFreeze.y + ", " +pointToFreeze.x);
 
         mFrozenTiles.add(pointToFreeze);
+        temporaryFreeze = pointToFreeze;
+
+    }
+
+    /**The tile to insert is frozen while the blank tile is being prepared for line end
+     * maneuvers. After the line end maneuver is fetched, the tile should be unfrozen again.
+     */
+    private void temporaryUnfreeze(){
+        mFrozenTiles.remove(temporaryFreeze);
     }
 
     /**The N-Puzzle requires 6 unfrozen tiles to be left over to solve at
@@ -177,15 +266,37 @@ public class SolutionStrategy {
 ///////////////////////////////////////////////////////////////////////
 //line end
 ///////////////////////////////////////////////////////////////////////
+
+    /**Returns true if the last solved index is at the end of a row or column
+     * AND the last goal solved was moving the blank tile.
+     */
     public boolean readyForLineEndManeuver(){
+        //The blank tile is always put in place before a line end maneuver
         if(moveBlank) return false;
         return atEndOfCol || atEndOfRow;
     }
 
     public MoveQueue lineEndManeuver(){
-        if(atEndOfRow) return rowEndManeuver();
-        else if(atEndOfCol) return colEndManeuver();
-        return null;
+        MoveQueue result = null;
+        if(atEndOfRow){
+            result = rowEndManeuver();
+        }
+        else if(atEndOfCol){
+            result = colEndManeuver();
+        }
+
+        atEndOfRow = false;
+        atEndOfCol = false;
+
+        //After the row end maneuver, we'll move the blank to the next
+        //index to solve.
+        Log.d(TAG, "Lind end maneuver added, turning moveBlank flag to true");
+        moveBlank = true;
+
+        //unfreeze the tile that was temporarily frozen for the line end maneuver
+        temporaryUnfreeze();
+
+        return result;
     }
 
     /**The row end maneuver is the method for inserting a correct tile
@@ -221,8 +332,6 @@ public class SolutionStrategy {
         }
 
         Log.d(TAG, "Row end, getting row end maneuver");
-        atEndOfRow = false;
-        moveBlank = true;
         return mRowEndManeuver;
     }
 
@@ -265,9 +374,6 @@ public class SolutionStrategy {
         }
 
         Log.d(TAG, "Col end, getting col end maneuver");
-
-        moveBlank = true;
-        atEndOfCol = false;
         return mColEndManeuver;
     }
 

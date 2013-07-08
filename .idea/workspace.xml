@@ -174,10 +174,19 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="GamePlayActivity.java" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="GamePlayActivity.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/com/example/n_puzzle/GamePlayActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="256" column="13" selection-start="8101" selection-end="8101" vertical-scroll-proportion="0.0" vertical-offset="2952" max-vertical-offset="6765">
+            <state line="371" column="35" selection-start="12066" selection-end="12066" vertical-scroll-proportion="0.44383058" vertical-offset="4919" max-vertical-offset="6915">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ImageSelectionActivity.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/example/n_puzzle/ImageSelectionActivity.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="147" column="18" selection-start="5123" selection-end="5123" vertical-scroll-proportion="0.0" vertical-offset="1484" max-vertical-offset="2955">
               <folding />
             </state>
           </provider>
@@ -186,7 +195,7 @@
       <file leaf-file-name="SolutionStrategy.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/example/n_puzzle/Solver/SolutionStrategy.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="49" column="50" selection-start="1509" selection-end="1512" vertical-scroll-proportion="-6.107143" vertical-offset="414" max-vertical-offset="4125">
+            <state line="157" column="16" selection-start="5419" selection-end="5419" vertical-scroll-proportion="0.0" vertical-offset="2024" max-vertical-offset="5715">
               <folding />
             </state>
           </provider>
@@ -195,17 +204,19 @@
       <file leaf-file-name="MoveQueue.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/example/n_puzzle/Solver/MoveQueue.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="48" column="10" selection-start="1170" selection-end="1170" vertical-scroll-proportion="0.0" vertical-offset="434" max-vertical-offset="1995">
+            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1995">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="SolveGameTask.java" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="SolveGameTask.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/example/n_puzzle/Solver/SolveGameTask.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="97" column="34" selection-start="2829" selection-end="2829" vertical-scroll-proportion="0.6132597" vertical-offset="1002" max-vertical-offset="1545">
-              <folding />
+            <state line="37" column="0" selection-start="1056" selection-end="1056" vertical-scroll-proportion="0.0" vertical-offset="375" max-vertical-offset="1605">
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -213,7 +224,7 @@
       <file leaf-file-name="GameState.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/example/n_puzzle/GameState.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="315" column="13" selection-start="10176" selection-end="10176" vertical-scroll-proportion="0.0" vertical-offset="4575" max-vertical-offset="5460">
+            <state line="147" column="0" selection-start="4373" selection-end="4373" vertical-scroll-proportion="0.0" vertical-offset="1740" max-vertical-offset="5190">
               <folding />
             </state>
           </provider>
@@ -222,7 +233,7 @@
       <file leaf-file-name="Heuristic.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/example/n_puzzle/Solver/Heuristics/Heuristic.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="18" column="0" selection-start="448" selection-end="448" vertical-scroll-proportion="0.0" vertical-offset="42" max-vertical-offset="585">
+            <state line="27" column="4" selection-start="731" selection-end="731" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="585">
               <folding />
             </state>
           </provider>
@@ -231,7 +242,7 @@
       <file leaf-file-name="BlankToTarget.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/example/n_puzzle/Solver/Heuristics/BlankToTarget.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="64" column="62" selection-start="2457" selection-end="2511" vertical-scroll-proportion="0.0" vertical-offset="945" max-vertical-offset="1710">
+            <state line="23" column="29" selection-start="741" selection-end="741" vertical-scroll-proportion="0.0" vertical-offset="90" max-vertical-offset="1635">
               <folding />
             </state>
           </provider>
@@ -240,7 +251,7 @@
       <file leaf-file-name="SolveLast6.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/example/n_puzzle/Solver/Heuristics/SolveLast6.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="61" column="13" selection-start="2003" selection-end="2003" vertical-scroll-proportion="0.0" vertical-offset="582" max-vertical-offset="1275">
+            <state line="61" column="13" selection-start="2003" selection-end="2003" vertical-scroll-proportion="0.0" vertical-offset="492" max-vertical-offset="1185">
               <folding />
             </state>
           </provider>
@@ -249,7 +260,7 @@
       <file leaf-file-name="Solver.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/example/n_puzzle/Solver/Solver.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="161" column="0" selection-start="5378" selection-end="5378" vertical-scroll-proportion="0.0" vertical-offset="1752" max-vertical-offset="2490">
+            <state line="84" column="43" selection-start="2668" selection-end="2668" vertical-scroll-proportion="0.0" vertical-offset="582" max-vertical-offset="2490">
               <folding />
             </state>
           </provider>
@@ -285,14 +296,14 @@
         <option value="$PROJECT_DIR$/res/menu/gameplay_menu.xml" />
         <option value="$PROJECT_DIR$/res/layout/activity_gameplay.xml" />
         <option value="$PROJECT_DIR$/src/com/example/n_puzzle/GameGrid.java" />
-        <option value="$PROJECT_DIR$/src/com/example/n_puzzle/Solver/Heuristics/BlankToTarget.java" />
         <option value="$PROJECT_DIR$/src/com/example/n_puzzle/Solver/MoveMaker.java" />
-        <option value="$PROJECT_DIR$/src/com/example/n_puzzle/Solver/SolveGameTask.java" />
-        <option value="$PROJECT_DIR$/src/com/example/n_puzzle/Solver/Heuristics/Heuristic.java" />
-        <option value="$PROJECT_DIR$/src/com/example/n_puzzle/GameState.java" />
-        <option value="$PROJECT_DIR$/src/com/example/n_puzzle/Solver/Solver.java" />
         <option value="$PROJECT_DIR$/src/com/example/n_puzzle/Solver/Heuristics/SolveLast6.java" />
         <option value="$PROJECT_DIR$/src/com/example/n_puzzle/Solver/MoveQueue.java" />
+        <option value="$PROJECT_DIR$/src/com/example/n_puzzle/Solver/SolveGameTask.java" />
+        <option value="$PROJECT_DIR$/src/com/example/n_puzzle/Solver/Heuristics/BlankToTarget.java" />
+        <option value="$PROJECT_DIR$/src/com/example/n_puzzle/Solver/Solver.java" />
+        <option value="$PROJECT_DIR$/src/com/example/n_puzzle/Solver/Heuristics/Heuristic.java" />
+        <option value="$PROJECT_DIR$/src/com/example/n_puzzle/GameState.java" />
         <option value="$PROJECT_DIR$/src/com/example/n_puzzle/Solver/SolutionStrategy.java" />
         <option value="$PROJECT_DIR$/src/com/example/n_puzzle/GamePlayActivity.java" />
       </list>
@@ -602,17 +613,17 @@
     <property name="recentsLimit" value="5" />
     <property name="options.lastSelected" value="editor.preferences.appearance" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
-    <property name="ANDROID_EXTENDED_DEVICE_CHOOSER_SERIALS" value="emulator-5554" />
+    <property name="ANDROID_EXTENDED_DEVICE_CHOOSER_SERIALS" value="emulator-5556" />
     <property name="MemberChooser.copyJavadoc" value="false" />
     <property name="GoToClass.includeJavaFiles" value="false" />
     <property name="GoToClass.toSaveIncludeLibraries" value="false" />
-    <property name="ANDROID_EXTENDED_DEVICE_CHOOSER_AVD" value="4.2.2_7inches" />
+    <property name="ANDROID_EXTENDED_DEVICE_CHOOSER_AVD" value="4.2.2_4.0inches" />
     <property name="OverrideImplement.overriding.sorted" value="false" />
     <property name="restartRequiresConfirmation" value="true" />
     <property name="MemberChooser.showClasses" value="true" />
     <property name="GoToClass.includeLibraries" value="false" />
-    <property name="options.splitter.details.proportions" value="0.5990396" />
     <property name="options.searchVisible" value="true" />
+    <property name="options.splitter.details.proportions" value="0.5990396" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -867,7 +878,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-1" y="0" width="1602" height="876" extended-state="6" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32947233" sideWeight="0.6712517" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32686982" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -885,7 +896,7 @@
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32947233" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.19354838" sideWeight="0.79253113" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.20746888" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.20746888" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24031007" sideWeight="0.791148" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -966,13 +977,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/res/values/strings.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="4" column="18" selection-start="116" selection-end="116" vertical-scroll-proportion="0.11070111" vertical-offset="0" max-vertical-offset="542">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/res/menu/gameplay_menu.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state line="2" column="9" selection-start="77" selection-end="77" vertical-scroll-proportion="0.055350553" vertical-offset="0" max-vertical-offset="542">
@@ -981,13 +985,13 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/res/layout/activity_gameplay.xml">
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
       <provider selected="true" editor-type-id="text-editor">
         <state line="2" column="14" selection-start="118" selection-end="118" vertical-scroll-proportion="-1.0344827" vertical-offset="0" max-vertical-offset="210">
           <folding />
         </state>
-      </provider>
-      <provider editor-type-id="android-designer">
-        <state />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/res/menu/image_select_menu.xml">
@@ -1018,9 +1022,39 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/example/n_puzzle/Solver/MoveQueue.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1995">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/example/n_puzzle/Solver/SolveGameTask.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="37" column="0" selection-start="1056" selection-end="1056" vertical-scroll-proportion="0.0" vertical-offset="375" max-vertical-offset="1605">
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/example/n_puzzle/GameState.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="147" column="0" selection-start="4373" selection-end="4373" vertical-scroll-proportion="0.0" vertical-offset="1740" max-vertical-offset="5190">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/example/n_puzzle/Solver/Heuristics/Heuristic.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="27" column="4" selection-start="731" selection-end="731" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="585">
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/example/n_puzzle/Solver/Heuristics/BlankToTarget.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="64" column="62" selection-start="2457" selection-end="2511" vertical-scroll-proportion="0.0" vertical-offset="537" max-vertical-offset="1635">
+        <state line="23" column="29" selection-start="741" selection-end="741" vertical-scroll-proportion="0.0" vertical-offset="90" max-vertical-offset="1635">
           <folding />
         </state>
       </provider>
@@ -1034,49 +1068,28 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/example/n_puzzle/Solver/Solver.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="161" column="0" selection-start="5378" selection-end="5378" vertical-scroll-proportion="0.0" vertical-offset="1752" max-vertical-offset="2490">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/example/n_puzzle/Solver/Heuristics/Heuristic.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="18" column="0" selection-start="448" selection-end="448" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="585">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/example/n_puzzle/GameState.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="315" column="13" selection-start="10176" selection-end="10176" vertical-scroll-proportion="0.0" vertical-offset="4337" max-vertical-offset="5460">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/example/n_puzzle/GamePlayActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="256" column="13" selection-start="8101" selection-end="8101" vertical-scroll-proportion="0.0" vertical-offset="2952" max-vertical-offset="6765">
+        <state line="84" column="43" selection-start="2668" selection-end="2668" vertical-scroll-proportion="0.0" vertical-offset="582" max-vertical-offset="2490">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/example/n_puzzle/Solver/SolutionStrategy.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="49" column="50" selection-start="1509" selection-end="1512" vertical-scroll-proportion="-6.107143" vertical-offset="414" max-vertical-offset="4125">
+        <state line="157" column="16" selection-start="5419" selection-end="5419" vertical-scroll-proportion="0.0" vertical-offset="2024" max-vertical-offset="5715">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/example/n_puzzle/Solver/MoveQueue.java">
+    <entry file="file://$PROJECT_DIR$/src/com/example/n_puzzle/ImageSelectionActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="48" column="10" selection-start="1170" selection-end="1170" vertical-scroll-proportion="0.0" vertical-offset="434" max-vertical-offset="1995">
+        <state line="147" column="18" selection-start="5123" selection-end="5123" vertical-scroll-proportion="0.0" vertical-offset="1484" max-vertical-offset="2955">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/example/n_puzzle/Solver/SolveGameTask.java">
+    <entry file="file://$PROJECT_DIR$/src/com/example/n_puzzle/GamePlayActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="97" column="34" selection-start="2829" selection-end="2829" vertical-scroll-proportion="0.6132597" vertical-offset="1002" max-vertical-offset="1545">
+        <state line="371" column="35" selection-start="12066" selection-end="12066" vertical-scroll-proportion="0.44383058" vertical-offset="4919" max-vertical-offset="6915">
           <folding />
         </state>
       </provider>

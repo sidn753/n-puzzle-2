@@ -142,25 +142,7 @@ public class GameState {
             return false;
         }
 
-        //TODO use deephashcode
-
-        //Log.d(TAG, String.format("Comparing gamestates. \n1: \n%s" +
-        //        "\n2: \n%s", this.toString(), other.toString()));
-
-        if(other == null) return false;
-
-        if(places.length != other.places.length) return false;
-
-        for(int row = 0; row < places.length; row++){
-            for(int col = 0; col < places[0].length; col++){
-                if(places[row][col] != other.places[row][col]){
-                    return false;
-                }
-
-            }
-        }
-
-        return true;
+        return Arrays.deepHashCode(places) == Arrays.deepHashCode(other.places);
 
     }
 
