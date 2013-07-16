@@ -3,6 +3,7 @@ package com.example.n_puzzle;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Point;
+import android.view.DragEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.RelativeLayout;
@@ -15,7 +16,8 @@ import android.util.Log;
  * 
  * @author StephenO
  */
-public class GameGrid extends RelativeLayout implements OnClickListener, View.OnLongClickListener {
+public class GameGrid extends RelativeLayout implements OnClickListener, View.OnLongClickListener,
+        View.OnDragListener {
 
 	public static final String TAG = GameGrid.class.getSimpleName();	
 	
@@ -37,10 +39,10 @@ public class GameGrid extends RelativeLayout implements OnClickListener, View.On
 	
 	public GameGrid(GamePlayActivity context, Bitmap bitmap, int numDivisions, GameState state) {
 		super(context);
-		this.mContext = context;
-        this.mImage = bitmap;
+		mContext = context;
+        mImage = bitmap;
 
-		this.mDivisions = numDivisions;
+		mDivisions = numDivisions;
 		mSegmentViews = new ArrayList<ImageSegmentView>();
         mSegmentGrid = new ImageSegmentView[numDivisions][numDivisions];
 			
@@ -54,7 +56,7 @@ public class GameGrid extends RelativeLayout implements OnClickListener, View.On
 		//build the imageviews that we'll move around
 		buildSegments(context);
 		
-		//Randomly place the views on the grid
+		//Place the tiles in reverse order to ensure solvability
         if(state == null){
 		    putDefaultPlacement();
         }
@@ -230,18 +232,46 @@ public class GameGrid extends RelativeLayout implements OnClickListener, View.On
 			mViewTotalWidth = (int) (mImageWidth * hRatio);
 			mViewTotalHeight = displayHeight;
 		}
-		
+
 		//Set the dimensions of the view segments that we'll be moving around
 		mViewSegmentWidth = mViewTotalWidth / mDivisions;
 		mViewSegmentHeight = mViewTotalHeight / mDivisions;
-		
+
 	}
-	
+
 	@Override
 	/**Direction an image segment into the blank tile if it is adjacent to the blank tile
 	 */
 	public void onClick(View touchedView) {
-		//If the game is in solveMode, stop solvemode
+        Log.d(TAG, "onClick");
+        touched((ImageSegmentView) touchedView);
+
+    }
+
+    @Override
+    public boolean onLongClick(View touchedView) {
+        Log.d(TAG, "onLongClick");
+        touched((ImageSegmentView) touchedView);
+        return true;
+    }
+
+
+    private View mDraggedView;
+    @Override
+    public boolean onDrag(View touchedView, DragEvent dragEvent) {
+        if(dragEvent.getAction() == DragEvent.ACTION_DRAG_STARTED){
+            Log.d(TAG, "drag started");
+            mDraggedView = touchedView;
+        }
+        else if(dragEvent.getAction() == DragEvent.ACTION_DRAG_ENDED){
+            Log.d(TAG, "drag ended");
+            touched((ImageSegmentView) mDraggedView);
+        }
+        return true;
+    }
+
+    private void touched(ImageSegmentView touchedView) {
+        //If the game is in solveMode, stop solvemode
         if(solveMode){
             toggleSolveMode();
             mContext.stopMoveMaker();
@@ -250,25 +280,25 @@ public class GameGrid extends RelativeLayout implements OnClickListener, View.On
 
         //Otherwise make a move based on the view that was touched
         ImageSegmentView touchedSegment = (ImageSegmentView) touchedView;
-		int row = touchedSegment.getCurrentRow();
-		int col = touchedSegment.getCurrentCol();
-		int blankRow = blankTile.y;
-		int blankCol = blankTile.x;
+        int row = touchedSegment.getCurrentRow();
+        int col = touchedSegment.getCurrentCol();
+        int blankRow = blankTile.y;
+        int blankCol = blankTile.x;
 
 
-		//is the touched tile adjacent to the blank tile?
-		int distance = Math.abs(blankRow - row) + Math.abs(blankCol - col);
-		boolean adjacent = (distance == 1);
-		
-		if(adjacent){
-		  	this.moveSegment(touchedSegment, row, col);
-		}
-		
-		//end the game if everything is in its correct position
-		if(isSolved()){
-			mContext.winGame();
-		}
-	}
+        //is the touched tile adjacent to the blank tile?
+        int distance = Math.abs(blankRow - row) + Math.abs(blankCol - col);
+        boolean adjacent = (distance == 1);
+
+        if(adjacent){
+              this.moveSegment(touchedSegment, row, col);
+        }
+
+        //end the game if everything is in its correct position
+        if(isSolved()){
+            mContext.winGame();
+        }
+    }
 
 
     public void makeMove(GameState.Direction move){
@@ -294,17 +324,10 @@ public class GameGrid extends RelativeLayout implements OnClickListener, View.On
     }
 
 
-    /**Show options menu on long click
-     */
-    @Override
-    public boolean onLongClick(View view) {
-        mContext.openOptionsMenu();
-        return true;
-    }
 
 	/**Returns true iff all of the imageSegments are in their "correct" positions,
 	 * i.e., they are in the correctPlaces they were in the original unshuffled image
-	 * 
+	 *
 	 * @return true if all the ImageSegments are in their correct positions
 	 */
 	public boolean isSolved(){
@@ -345,6 +368,7 @@ public class GameGrid extends RelativeLayout implements OnClickListener, View.On
     public boolean isInSolveMode(){
         return solveMode;
     }
+
 
 
     /**Helper class- builds cropped segments of the image associated with

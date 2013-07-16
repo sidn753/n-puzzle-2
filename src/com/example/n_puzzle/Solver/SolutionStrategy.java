@@ -39,6 +39,8 @@ public class SolutionStrategy {
      * then unfreeze it once the maneuver is over.
      */
     private Point temporaryFreeze;
+    private boolean mSolvingLast6 = false;
+    private boolean mFinished = false;
 
     public SolutionStrategy(GameState gameState, DifficultyManager.Difficulty difficulty){
         ROW_LENGTH = difficulty.getNumDivisions();
@@ -49,6 +51,7 @@ public class SolutionStrategy {
 
     }
 
+    //TODO make this use getNextIndex
     public int getFirstUnsolvedIndex(GameState gameState){
         int index = 0;
 
@@ -71,15 +74,16 @@ public class SolutionStrategy {
     public Heuristic getNextGoal(){
         Heuristic nextHeuristic = null;
 
+        //Everything is solved
+        if(mFinished){
+            Log.d(TAG, "Solved everything, solver stopping");
+            return null;
+        }
+
         if(moveBlank){
 
-            //this indicates that everything has been solved, including the last 6 tiles
-            if(indexToSolve > ROW_LENGTH * COL_LENGTH){
-                Log.d(TAG, "Solved everything, solver stopping");
-                return null;
-            }
 
-            //Get blank tile in place for row end maneuver
+            //Get blank tile in place for line end maneuver
             if(atEndOfRow){
 
                 //Inserting a tile into the end of a row
@@ -107,12 +111,14 @@ public class SolutionStrategy {
                     indexToPutBlankBeside);
             }
 
-            //This indicates that every tile has been checked.
-            //The only thing left to solve is the last 6 tiles.
-            else if(indexToSolve == ROW_LENGTH * COL_LENGTH){
+            //tile is one of the last 6 on the board, return brute force heuristic
+            //to solve the last 6 tiles
+            else if(inLastSix(indexToSolve)){
+                mSolvingLast6 = true;
                 return new SolveLast6();
             }
 
+            //simply get the blank tile next to the next tile we want to solve
             else{
                 nextHeuristic = new BlankToTarget(indexToSolve, GameState.Direction.UP);
                 Log.d(TAG, "Getting blank tile to index " + indexToSolve);
@@ -156,6 +162,12 @@ public class SolutionStrategy {
      * This makes it easier to move the tile.
      */
     public void processSolvedGoal(){
+
+        //The last goal was solving the final 6 tiles, so the game is solved
+        if(mSolvingLast6){
+            mFinished = true;
+        }
+
         if(moveBlank){
             moveBlank = false;
         }
@@ -188,16 +200,6 @@ public class SolutionStrategy {
         if(!mFrozenTiles.contains(pointToFreeze))
             mFrozenTiles.add(pointToFreeze);
 
-    }
-
-    public void getNextIndex(){
-        indexToSolve++;
-
-        //skip tiles in the last 6
-        while(inLastSix(indexToSolve)){
-            Log.d(TAG, indexToSolve + " is in the last 6 tiles, skipping it.");
-            indexToSolve++;
-        }
     }
 
     /**When inserting into the end of a line, the tile to insert is placed adjacent to
@@ -235,6 +237,53 @@ public class SolutionStrategy {
         mFrozenTiles.remove(temporaryFreeze);
     }
 
+///////////////////////////////////////////////////////////////////////////////////////
+//Determining the next tile to solve
+///////////////////////////////////////////////////////////////////////////////////////
+    public void getNextIndex(){
+
+        Point location = GameState.getCorrectLocationForIndex(indexToSolve, ROW_LENGTH);
+
+        if(!inLastTwoRows(location)){
+            indexToSolve++;
+        }
+
+        else{
+            boolean lastRow = location.y == COL_LENGTH - 1;
+
+            //if second to last row, go one cell down
+            if(!lastRow){
+                indexToSolve = indexToSolve + ROW_LENGTH;
+            }
+
+            //if last row, go one cell up and one to the right
+            else{
+                indexToSolve = indexToSolve - ROW_LENGTH + 1;
+            }
+
+        }
+        Log.d(TAG, "Next index called, next index is " + indexToSolve);
+
+    }
+
+    /**The last two rows have to be solved differently:
+     * Rather than incrementing on the same row from left to right, the last two
+     * rows are solved one column at a time-> up down up down
+     *
+     * @return true if the tile is the last two rows
+     */
+    private boolean inLastTwoRows(Point location){
+
+        final int UPPER_BOUND = COL_LENGTH - 2;
+        final int LOWER_BOUND = COL_LENGTH - 1;
+
+        boolean result = location.y <= LOWER_BOUND && location.y >= UPPER_BOUND;
+
+        Log.d(TAG, "Last two rows for index " + indexToSolve + ": " + result);
+
+        return result;
+    }
+
     /**The N-Puzzle requires 6 unfrozen tiles to be left over to solve at
      * the end.
      *
@@ -243,12 +292,12 @@ public class SolutionStrategy {
      * If the current index to solve would be in this block, we skip that
      * index.
      *
-     * @param index the index to solve
      * @return true if this index's solution location is in the bottom-right 6
      *  tiles of the gamegrid
      */
     private boolean inLastSix(int index){
         Point location = GameState.getCorrectLocationForIndex(index, ROW_LENGTH);
+
         final int UPPER_BOUND = COL_LENGTH - 2;
         final int LOWER_BOUND = COL_LENGTH - 1;
         final int LEFT_BOUND = ROW_LENGTH - 3;
@@ -257,8 +306,8 @@ public class SolutionStrategy {
         boolean result = location.x <= RIGHT_BOUND && location.x >= LEFT_BOUND
                 && location.y <= LOWER_BOUND && location.y >= UPPER_BOUND;
 
-        Log.d(TAG, String.format("inLastSix for %s. Location is RC(%s, %s). " +
-                "Result is %s.", index, location.y, location.x, result));
+        Log.d(TAG, String.format("inLastSix for Location is RC(%s, %s). " +
+                "Result is %s.", location.y, location.x, result));
         return result;
     }
 
@@ -380,6 +429,11 @@ public class SolutionStrategy {
 
     public ArrayList<Point> getFrozenTiles(){
         return mFrozenTiles;
+    }
+
+
+    public boolean isSuccessfullyCompleted(){
+        return mFinished;
     }
 
 }

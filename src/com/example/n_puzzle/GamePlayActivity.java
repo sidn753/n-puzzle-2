@@ -126,12 +126,14 @@ public class GamePlayActivity extends Activity implements DifficultyManagerCalle
 
 	
 	/**Initialize and start the countdowntimer.
+     * During the countdown, shuffle the image asynchronously.
 	 * When the countdown finishes, start the gameplay.
 	 */
 	private void startCountDown() {
         txt_countdown = (TextView)findViewById(R.id.txt_countdown);
         txt_countdown.setText(Long.toString(PREVIEW_COUNTDOWN));
         mCountdown = new CountDownTimer(PREVIEW_COUNTDOWN * 1000, 1000){
+
 
         	@Override
 			public void onTick(long arg0) {
@@ -147,14 +149,28 @@ public class GamePlayActivity extends Activity implements DifficultyManagerCalle
 			}
 			        	
         }.start();
+
+		mDifficulty = DifficultyManager.getCurrentDifficulty(this);
+
+        //Get the default GameGrid state (tiles in reverse order)
+        mState = new GameGrid(this, mBitmap, mDifficulty.getNumDivisions(), null).getGameState();
+        shuffle();
+
 	}
+
+    private void shuffle(){
+        new ShuffleTask(this).execute(mState);
+    }
+
+    public void onPostShuffle(GameState endState){
+        mState = endState;
+    }
 
 /////////////////////////////////////////////////////////////////////////
 //Start game
 /////////////////////////////////////////////////////////////////////////
 	private void startGame(){
 		setContentView(R.layout.activity_gameplay);
-		mDifficulty = DifficultyManager.getCurrentDifficulty(this);
 		mLayout = (LinearLayout)findViewById(R.id.gameview);
 		putGameGrid();
         restartSolving();
@@ -333,7 +349,7 @@ public class GamePlayActivity extends Activity implements DifficultyManagerCalle
 
     void moveMade(){
         mNumMoves++;
-
+        Log.d("movemade", "" + mNumMoves);
         if(!mGameGrid.isInSolveMode()){
             restartSolving();
         }
@@ -379,10 +395,10 @@ public class GamePlayActivity extends Activity implements DifficultyManagerCalle
 	/**Start the game over activity
 	 */
 	protected void winGame(){
-		Intent i = new Intent(this, YouWinActivity.class);
-		i.putExtra("numMoves", mNumMoves);
-        //startActivity(i);
-        //this.finish();
+        Toast.makeText(this, "Game Complete! It took " + mNumMoves +
+                " moves", Toast.LENGTH_LONG).show();
+
+        mGameGrid.toggleSolveMode();
 	}
 
     /**Free the memory used by the GameGrid*/
