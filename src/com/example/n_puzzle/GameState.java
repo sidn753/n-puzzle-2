@@ -299,6 +299,7 @@ public class GameState {
     }
 
     public Point getBlankTile(){
+        findBlankTile();
         return blankTile;
     }
 

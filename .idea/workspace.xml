@@ -174,13 +174,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="GamePlayActivity.java" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="GamePlayActivity.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/example/n_puzzle/GamePlayActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="172" column="51" selection-start="5623" selection-end="5623" vertical-scroll-proportion="0.46176046" vertical-offset="2260" max-vertical-offset="7560">
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
+            <state line="172" column="51" selection-start="5623" selection-end="5623" vertical-scroll-proportion="0.0" vertical-offset="2288" max-vertical-offset="7560">
+              <folding />
             </state>
           </provider>
         </entry>
@@ -188,7 +186,7 @@
       <file leaf-file-name="GameGrid.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/example/n_puzzle/GameGrid.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="382" column="18" selection-start="11675" selection-end="11681" vertical-scroll-proportion="0.0" vertical-offset="5509" max-vertical-offset="6180">
+            <state line="382" column="18" selection-start="11675" selection-end="11681" vertical-scroll-proportion="0.0" vertical-offset="5715" max-vertical-offset="6180">
               <folding />
             </state>
           </provider>
@@ -197,7 +195,7 @@
       <file leaf-file-name="ShuffleTask.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/example/n_puzzle/ShuffleTask.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="59" column="0" selection-start="1524" selection-end="1524" vertical-scroll-proportion="0.0" vertical-offset="222" max-vertical-offset="975">
+            <state line="34" column="0" selection-start="856" selection-end="856" vertical-scroll-proportion="0.0" vertical-offset="495" max-vertical-offset="1020">
               <folding />
             </state>
           </provider>
@@ -224,7 +222,34 @@
       <file leaf-file-name="Solver.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/example/n_puzzle/Solver/Solver.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="123" column="40" selection-start="3852" selection-end="3852" vertical-scroll-proportion="0.0" vertical-offset="1830" max-vertical-offset="2655">
+            <state line="46" column="65" selection-start="1495" selection-end="1499" vertical-scroll-proportion="0.0" vertical-offset="675" max-vertical-offset="2655">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="GameState.java" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/com/example/n_puzzle/GameState.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="310" column="53" selection-start="9998" selection-end="9998" vertical-scroll-proportion="0.04040404" vertical-offset="4487" max-vertical-offset="5205">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Heuristic.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/example/n_puzzle/Solver/Heuristics/Heuristic.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="27" column="25" selection-start="725" selection-end="725" vertical-scroll-proportion="0.0" vertical-offset="390" max-vertical-offset="690">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="BlankToTarget.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/example/n_puzzle/Solver/Heuristics/BlankToTarget.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="48" column="0" selection-start="1719" selection-end="1719" vertical-scroll-proportion="0.0" vertical-offset="705" max-vertical-offset="1710">
               <folding />
             </state>
           </provider>
@@ -262,14 +287,14 @@
         <option value="$PROJECT_DIR$/src/com/example/n_puzzle/Solver/MoveQueue.java" />
         <option value="$PROJECT_DIR$/src/com/example/n_puzzle/Solver/SolveGameTask.java" />
         <option value="$PROJECT_DIR$/src/com/example/n_puzzle/Solver/Heuristics/BlankToTarget.java" />
-        <option value="$PROJECT_DIR$/src/com/example/n_puzzle/Solver/Heuristics/Heuristic.java" />
-        <option value="$PROJECT_DIR$/src/com/example/n_puzzle/GameState.java" />
         <option value="$PROJECT_DIR$/src/com/example/n_puzzle/Solver/SolutionStrategy.java" />
         <option value="$PROJECT_DIR$/src/com/example/n_puzzle/Solver/Solver.java" />
         <option value="$PROJECT_DIR$/src/com/example/n_puzzle/Shuffler.java" />
         <option value="$PROJECT_DIR$/src/com/example/n_puzzle/GameGrid.java" />
-        <option value="$PROJECT_DIR$/src/com/example/n_puzzle/ShuffleTask.java" />
         <option value="$PROJECT_DIR$/src/com/example/n_puzzle/GamePlayActivity.java" />
+        <option value="$PROJECT_DIR$/src/com/example/n_puzzle/Solver/Heuristics/Heuristic.java" />
+        <option value="$PROJECT_DIR$/src/com/example/n_puzzle/GameState.java" />
+        <option value="$PROJECT_DIR$/src/com/example/n_puzzle/ShuffleTask.java" />
       </list>
     </option>
   </component>
@@ -295,7 +320,7 @@
     <option name="STATE" value="0" />
   </component>
   <component name="ProjectView">
-    <navigator currentView="ProjectPane" proportions="" version="1" splitterProportion="0.5">
+    <navigator currentView="Scope" currentSubView="Project Files" proportions="" version="1" splitterProportion="0.5">
       <flattenPackages />
       <showMembers />
       <showModules />
@@ -307,7 +332,83 @@
       <sortByType />
     </navigator>
     <panes>
-      <pane id="PackagesPane" />
+      <pane id="Scope">
+        <subPane subId="Default" />
+        <subPane subId="Project Files">
+          <PATH>
+            <PATH_ELEMENT USER_OBJECT="Root">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+        <subPane subId="Failed commit: New changelist">
+          <PATH>
+            <PATH_ELEMENT USER_OBJECT="Root">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="N_Puzzle">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT USER_OBJECT="Root">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="N_Puzzle">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="src">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="com/example/n_puzzle">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT USER_OBJECT="Root">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="N_Puzzle">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="res">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="values">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT USER_OBJECT="Root">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="N_Puzzle">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="res">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="layout">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+      </pane>
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -498,71 +599,16 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scope">
-        <subPane subId="Default" />
-        <subPane subId="Failed commit: New changelist">
+      <pane id="PackagesPane">
+        <subPane>
           <PATH>
-            <PATH_ELEMENT USER_OBJECT="Root">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
+            <PATH_ELEMENT>
+              <option name="myItemId" value="N_Puzzle" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewProjectNode" />
             </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="N_Puzzle">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT USER_OBJECT="Root">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="N_Puzzle">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="src">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="com/example/n_puzzle">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT USER_OBJECT="Root">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="N_Puzzle">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="res">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="values">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT USER_OBJECT="Root">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="N_Puzzle">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="res">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="layout">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
+            <PATH_ELEMENT>
+              <option name="myItemId" value="N_Puzzle" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewModuleNode" />
             </PATH_ELEMENT>
           </PATH>
         </subPane>
@@ -841,7 +887,7 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-1" y="0" width="1602" height="876" extended-state="7" />
+    <frame x="-1" y="0" width="1602" height="876" extended-state="6" />
     <editor active="false" />
     <layout>
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32947233" sideWeight="0.6712517" order="2" side_tool="false" content_ui="tabs" />
@@ -943,9 +989,7 @@
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/res/layout/activity_gameplay.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="2" column="14" selection-start="118" selection-end="118" vertical-scroll-proportion="-1.0344827" vertical-offset="0" max-vertical-offset="210">
-          <folding />
-        </state>
+        <state line="2" column="14" selection-start="118" selection-end="118" vertical-scroll-proportion="-1.0344827" vertical-offset="0" max-vertical-offset="210" />
       </provider>
       <provider editor-type-id="android-designer">
         <state />
@@ -958,9 +1002,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/example/n_puzzle/Solver/Node.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="22" column="21" selection-start="552" selection-end="552" vertical-scroll-proportion="0.6088561" vertical-offset="0" max-vertical-offset="555">
-          <folding />
-        </state>
+        <state line="22" column="21" selection-start="552" selection-end="552" vertical-scroll-proportion="0.6088561" vertical-offset="0" max-vertical-offset="555" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/example/n_puzzle/Solver/MoveMaker.java">
@@ -979,9 +1021,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/example/n_puzzle/ImageSelectionActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="147" column="18" selection-start="5123" selection-end="5123" vertical-scroll-proportion="0.0" vertical-offset="1484" max-vertical-offset="2955">
-          <folding />
-        </state>
+        <state line="147" column="18" selection-start="5123" selection-end="5123" vertical-scroll-proportion="0.0" vertical-offset="1484" max-vertical-offset="2955" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/example/n_puzzle/Solver/SolutionStrategy.java">
@@ -991,68 +1031,66 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/example/n_puzzle/GameState.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="147" column="0" selection-start="4373" selection-end="4373" vertical-scroll-proportion="0.0" vertical-offset="1740" max-vertical-offset="5190">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/example/n_puzzle/Solver/Heuristics/Heuristic.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="27" column="4" selection-start="731" selection-end="731" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="585">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/example/n_puzzle/Solver/Heuristics/BlankToTarget.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="23" column="29" selection-start="741" selection-end="741" vertical-scroll-proportion="0.0" vertical-offset="90" max-vertical-offset="1635">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/example/n_puzzle/Solver/Solver.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="123" column="40" selection-start="3852" selection-end="3852" vertical-scroll-proportion="0.0" vertical-offset="1665" max-vertical-offset="2490">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/example/n_puzzle/Solver/Heuristics/SolveLast6.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="61" column="13" selection-start="2003" selection-end="2003" vertical-scroll-proportion="0.0" vertical-offset="582" max-vertical-offset="1275">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/example/n_puzzle/Solver/SolveGameTask.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="25" column="29" selection-start="705" selection-end="705" vertical-scroll-proportion="0.0" vertical-offset="24" max-vertical-offset="1485">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/example/n_puzzle/ShuffleTask.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="59" column="0" selection-start="1524" selection-end="1524" vertical-scroll-proportion="0.0" vertical-offset="222" max-vertical-offset="975">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/example/n_puzzle/GameGrid.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="382" column="18" selection-start="11675" selection-end="11681" vertical-scroll-proportion="0.0" vertical-offset="5509" max-vertical-offset="6180">
+        <state line="27" column="25" selection-start="725" selection-end="725" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="615">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/example/n_puzzle/GamePlayActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="172" column="51" selection-start="5623" selection-end="5623" vertical-scroll-proportion="0.46176046" vertical-offset="2260" max-vertical-offset="7560">
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+        <state line="172" column="51" selection-start="5623" selection-end="5623" vertical-scroll-proportion="0.0" vertical-offset="2288" max-vertical-offset="7560">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/example/n_puzzle/GameGrid.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="382" column="18" selection-start="11675" selection-end="11681" vertical-scroll-proportion="0.0" vertical-offset="5715" max-vertical-offset="6180">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/example/n_puzzle/ShuffleTask.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="34" column="0" selection-start="856" selection-end="856" vertical-scroll-proportion="0.0" vertical-offset="147" max-vertical-offset="960">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/example/n_puzzle/Solver/SolveGameTask.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="25" column="29" selection-start="705" selection-end="705" vertical-scroll-proportion="0.0" vertical-offset="360" max-vertical-offset="1605">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/example/n_puzzle/Solver/Heuristics/SolveLast6.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="61" column="13" selection-start="2003" selection-end="2003" vertical-scroll-proportion="0.0" vertical-offset="900" max-vertical-offset="1275">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/example/n_puzzle/Solver/Solver.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="46" column="65" selection-start="1495" selection-end="1499" vertical-scroll-proportion="0.0" vertical-offset="675" max-vertical-offset="2655">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/example/n_puzzle/GameState.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="310" column="53" selection-start="9998" selection-end="9998" vertical-scroll-proportion="0.04040404" vertical-offset="4487" max-vertical-offset="5205">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/example/n_puzzle/Solver/Heuristics/BlankToTarget.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="48" column="0" selection-start="1719" selection-end="1719" vertical-scroll-proportion="0.0" vertical-offset="546" max-vertical-offset="1635">
+          <folding />
         </state>
       </provider>
     </entry>
