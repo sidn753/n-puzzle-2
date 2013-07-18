@@ -89,6 +89,7 @@ public class SolveGameTask extends AsyncTask<Integer, Long, Node> {
 
         if(result == null){
             Log.d(TAG, "SolveGameTask finished, but the result was null");
+            mContext.solverFailed();
             return;
         }
 

@@ -431,7 +431,6 @@ public class SolutionStrategy {
         return mFrozenTiles;
     }
 
-
     public boolean isSuccessfullyCompleted(){
         return mFinished;
     }

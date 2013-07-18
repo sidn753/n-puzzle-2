@@ -1,16 +1,23 @@
 package com.example.n_puzzle.Solver;
 
-import com.example.n_puzzle.GameState;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.Queue;
+import java.util.Random;
+
+import android.graphics.Point;
+import android.util.Log;
+
+import com.example.n_puzzle.GameState;
+import com.example.n_puzzle.GameState.Direction;
 
 /**
  * Created by stepheno on 6/30/13.
  */
 public class MoveQueue implements Queue<GameState.Direction> {
+	private static final String TAG = "MoveQueue";
+	
     private ArrayList<GameState.Direction> moves;
 
     public MoveQueue(){
@@ -41,18 +48,31 @@ public class MoveQueue implements Queue<GameState.Direction> {
         return true;
     }
 
+    public GameState addRandomMove(GameState beginState, ArrayList<Point> frozenTiles){
+    	
+    	GameState endState = this.getStateAfterMoves(beginState);
+    	ArrayList<GameState.Direction> possibleMoves= endState.possibleMoves(frozenTiles);
+    	
+    	Direction move = possibleMoves.get(new Random().nextInt(possibleMoves.size()));
+		
+    	Log.d(TAG, "Adding random move: " + move);
+    	this.add(move);
+    	
+    	return endState.makeMove(move);
+    	
+    }
+    
     @Override
     public synchronized void clear() {
         moves.removeAll(moves);
     }
 
     public GameState getStateAfterMoves(GameState beginState){
-        GameState endState = null;
+        GameState endState = beginState;
 
         for(GameState.Direction move : moves){
-            endState = beginState.makeMove(move);
+            endState = endState.makeMove(move);
         }
-
         return endState;
     }
 
@@ -118,7 +138,6 @@ public class MoveQueue implements Queue<GameState.Direction> {
     public GameState.Direction remove() {
         return null;
     }
-
 
     @Override
     public GameState.Direction element() {

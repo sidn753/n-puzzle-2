@@ -35,6 +35,7 @@ public class GamePlayActivity extends Activity implements DifficultyManagerCalle
 
 	/**Run the preview activity only if it hasn't been run before*/
 	public static boolean initialized = false;
+	public boolean started = false;
 
 	private LinearLayout mLayout;
 	private GameGrid mGameGrid;
@@ -55,6 +56,9 @@ public class GamePlayActivity extends Activity implements DifficultyManagerCalle
 
     /**The placements of the tiles will be saved in this 2d array*/
     private GameState mState = null;
+    
+    private boolean isMoveMakerRunning;
+    private boolean isMoveMakerEmpty = false;
 
 	private int mNumMoves;
 
@@ -154,7 +158,7 @@ public class GamePlayActivity extends Activity implements DifficultyManagerCalle
 
         //Get the default GameGrid state (tiles in reverse order)
         mState = new GameGrid(this, mBitmap, mDifficulty.getNumDivisions(), null).getGameState();
-        //shuffle();
+        shuffle();
 
 	}
 
@@ -177,6 +181,7 @@ public class GamePlayActivity extends Activity implements DifficultyManagerCalle
 		setContentView(R.layout.activity_gameplay);
 		mLayout = (LinearLayout)findViewById(R.id.gameview);
 		putGameGrid();
+		started = true;
         restartSolving();
 	}
 
@@ -234,15 +239,39 @@ public class GamePlayActivity extends Activity implements DifficultyManagerCalle
         mSolveTask = new SolveGameTask(this, heuristic, frozenTiles, gameState);
         mSolveTask.execute();
     }
+    
+    /**If the solver fails for some reason, we add a random move and try again. */
+    public void solverFailed(){
+    	Log.d(TAG, "Solver failed. Adding random move and trying again");
+    	
+    	ArrayList<Point> frozenTiles = mSolutionStrategy.getFrozenTiles();
+    	
+    	mState = mGameGrid.getGameState();
+    	
+    	GameState stateAfterRandomMove = mMoveQueue.addRandomMove(mState, frozenTiles);
+    	solveNextTask(stateAfterRandomMove);
+    }
 
+    /**SolveGameTask calls this method in onPostExecute.
+     * The result node contains the beginning state, the end state, and the moves
+     * in between.
+     * 
+     * @param result the solution returned by the solvegametask.
+     */
     public void processSolvedGoal(Node result) {
 
         Log.d(TAG, "Solver finished. adding moves to MoveQueue");
 
-
         mSolutionStrategy.processSolvedGoal();
 
         mMoveQueue.addAll(result.getMoveQueue());
+        
+        //If Solve it for me was clicked and we ran out of moves, restart the movemaker
+        if(isMoveMakerRunning && isMoveMakerEmpty){
+        	Log.d(TAG, "New moves added to movequeue, restarting movemaker");
+        	startMoveMaker();
+        }
+        
         GameState endState = result.getEndState();
 
         /*If we're solving the end of a row, append the row end maneuver
@@ -319,9 +348,12 @@ public class GamePlayActivity extends Activity implements DifficultyManagerCalle
     /**Have the solver AI solve the game in real time
      */
     private void startMoveMaker() {
-        mGameGrid.setTouchEnabled(false);
-        mMoveMaker = new MoveMaker(this, mMoveQueue);
-        mMoveMaker.run();
+    	if(started){
+	        mGameGrid.setTouchEnabled(false);
+	        mMoveMaker = new MoveMaker(this, mMoveQueue);
+	        isMoveMakerRunning = true;
+	        mMoveMaker.run();
+    	}
     }
 
     public void makeMove(GameState.Direction move){
@@ -347,9 +379,9 @@ public class GamePlayActivity extends Activity implements DifficultyManagerCalle
     public void stopMoveMaker(){
         if(mMoveMaker != null){
             mMoveMaker.stop();
+            isMoveMakerRunning = false;
         }
     }
-
 
     void moveMade(){
         mNumMoves++;
@@ -360,12 +392,13 @@ public class GamePlayActivity extends Activity implements DifficultyManagerCalle
     }
 
     public void moveMakerFinished(){
+    	Log.d(TAG, "MoveMaker finished");
         if(mGameGrid.isSolved()){
             winGame();
         }
         else{
-            mGameGrid.setTouchEnabled(true);;
-            restartSolving();
+        	Log.d(TAG, "Movemaker finished: out of moves before solving.");
+            isMoveMakerEmpty = true;
         }
     }
 

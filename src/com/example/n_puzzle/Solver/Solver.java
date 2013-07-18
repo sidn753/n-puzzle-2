@@ -150,7 +150,7 @@ public class Solver {
             }
             else{
 
-                if(mHeuristic instanceof SolveLast6){
+                if(GamePlayActivity.DEBUG_VERBOSE){
                     Log.d(TAG, String.format("Adding a new node to the PriorityQueue. " +
                             "The previous state is \n%s\n" +
                             "The Direction is %s, and the resultant state is \n%s\n ",
