@@ -78,23 +78,35 @@ public class GameGrid extends RelativeLayout implements OnClickListener, View.On
         mSegmentGrid = new ImageSegmentView[mDivisions][mDivisions];
 
         int index = 0;
-
+        boolean isBlankTile = false;
+        
 		for(int row = 0; row < mDivisions; row++){
 			for(int col = 0; col < mDivisions; col++){
 
-                if(row == mDivisions -1 && col == mDivisions -1) break;   //leave the last tile blank
-
+				//blank tile. -1 indicates the blank tile
+				isBlankTile = (row == mDivisions -1 && col == mDivisions -1);
+				
+				if(isBlankTile) index = -1;
+				
 				ImageSegmentView segmentView = new ImageSegmentView(context, row, col, index);
 				Bitmap segmentBitmap = builder.buildImageSegment(row, col);
 				segmentView.setImageBitmap(segmentBitmap);
 				segmentView.setBackgroundResource(R.drawable.border);
 				
-				segmentView.setOnClickListener(this);
-                segmentView.setOnLongClickListener(this);
-                mSegmentGrid[row][col] = segmentView;
+				mSegmentGrid[row][col] = segmentView;
 				mSegmentViews.add(segmentView);
+				
 
-                index++;
+				if(isBlankTile){
+					//segmentView.setAlpha(0);
+					break;
+				}
+				else{
+					segmentView.setOnLongClickListener(this);
+					segmentView.setOnClickListener(this);
+					index++;
+				}
+				
 			}			
 		}
 
@@ -130,7 +142,6 @@ public class GameGrid extends RelativeLayout implements OnClickListener, View.On
     /**Place the tiles in the places indicated in the 2d array passed in
      * The integer 0 represents the tile that would be in the top left corner of the correctly assembled picture.
      * The integers increment from left to right, and then up to down.
-     * The integer -1 represents the blank tile.
      *
      * @param state 2d array of integers representing tile placements.
      */
@@ -143,7 +154,7 @@ public class GameGrid extends RelativeLayout implements OnClickListener, View.On
             for(int col = 0; col < mDivisions; col++){
                 int place = state.getByLocation(row, col);
 
-                if(place == -1){ //-1 indicates that the blank tile
+                if(place == -1){ //-1 indicates the blank tile
                     blankTile.y = row;
                     blankTile.x = col;
 
@@ -190,12 +201,10 @@ public class GameGrid extends RelativeLayout implements OnClickListener, View.On
 
         mContext.moveMade();    //alert the parent that a move was made
 		return segmentView;
-
 	}
 
 
-	/**Set all of the dimension measurements
-	 */
+	/**Set all of the dimension measurements */
 	public void setDimensionVariables(){
 		//Fetch the image and its dimensions
 		mImageHeight = mImage.getHeight();
@@ -303,7 +312,6 @@ public class GameGrid extends RelativeLayout implements OnClickListener, View.On
         }
     }
 
-
     public void makeMove(GameState.Direction move){
         int row = blankTile.y;
         int col = blankTile.x;
@@ -327,7 +335,6 @@ public class GameGrid extends RelativeLayout implements OnClickListener, View.On
     }
 
 
-
 	/**Returns true iff all of the imageSegments are in their "correct" positions,
 	 * i.e., they are in the correctPlaces they were in the original unshuffled image
 	 *
@@ -341,8 +348,7 @@ public class GameGrid extends RelativeLayout implements OnClickListener, View.On
 	}
 
 
-    /**Create a gamestate to save tile placements
-     */
+    /**Create a gamestate to save tile placements*/
     public GameState getGameState(){
         int[][] places = new int[mDivisions][mDivisions];
 
@@ -415,7 +421,5 @@ public class GameGrid extends RelativeLayout implements OnClickListener, View.On
 			return segmentBitmap;
 		}
 	}
-
-
 }
 
