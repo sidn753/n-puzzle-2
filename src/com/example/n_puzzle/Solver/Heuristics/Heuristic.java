@@ -3,6 +3,7 @@ package com.example.n_puzzle.Solver.Heuristics;
 import android.graphics.Point;
 import android.util.Log;
 
+import com.example.n_puzzle.GamePlayActivity;
 import com.example.n_puzzle.Solver.Node;
 
 import java.util.Comparator;
@@ -25,7 +26,9 @@ public abstract class Heuristic implements Comparator<Node> {
      *      from the second location.
      */
     public int getDistance(Point location1, Point location2){
-        Log.d("Heuristic", String.format("Point 1: %s. Point 2: %s", location1, location2));
+        if(GamePlayActivity.DEBUG_VERBOSE){
+            Log.d("Heuristic", String.format("Point 1: %s. Point 2: %s", location1, location2));
+        }
 
         if(location1 == null || location2 == null){
             throw new IllegalArgumentException("Heuristic: " +

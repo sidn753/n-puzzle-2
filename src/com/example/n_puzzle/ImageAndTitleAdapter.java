@@ -61,7 +61,7 @@ public class ImageAndTitleAdapter extends BaseAdapter{
 
         String pictureName = mPictureNames.get(position);
         String rawPictureName = mRawPictureNames.get(position);
-        //imageView.setImageResource(getDrawable(rawPictureName, convertView));
+        imageView.setImageResource(getDrawable(rawPictureName, convertView));
         textView.setText(pictureName);
 
         return convertView;

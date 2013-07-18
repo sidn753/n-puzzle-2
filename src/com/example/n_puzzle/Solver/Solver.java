@@ -45,6 +45,7 @@ public class Solver {
         mFrozenTiles = frozenTiles;
 
         Log.d(TAG, "Starting solver for goal: " + mHeuristic.getDescription());
+        Log.d(TAG, "BeginState: \n" + beginState.toString());
     }
 
     public Status getStatus(){
@@ -63,6 +64,7 @@ public class Solver {
         //The first state has no moves, and the ending state is the same as the beginning
         MoveQueue noMoves = new MoveQueue();
         Node firstState = new Node(mBeginState, noMoves, mBeginState);
+
 
         //If the goal has already been achieved, don't do anything
         if(mHeuristic.checkIfSolved(firstState)){
@@ -91,7 +93,7 @@ public class Solver {
             nextNode = mPossibleSuccessors.poll();
             mNodesChecked++;
 
-            //Log.d(TAG, "Solver checking node #" + mNodesChecked);
+            if(GamePlayActivity.DEBUG_VERBOSE) Log.d(TAG, "Solver checking node #" + mNodesChecked);
 
             if(nextNode == null){
                 Log.d(TAG, "Solver terminating before solution found, no successors left");

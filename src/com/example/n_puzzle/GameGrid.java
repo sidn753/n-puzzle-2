@@ -127,14 +127,17 @@ public class GameGrid extends RelativeLayout implements OnClickListener, View.On
 
     }
 
-    /**SolvedState the tiles to the correctPlaces indicated in the 2d array passed in
+    /**Place the tiles in the places indicated in the 2d array passed in
      * The integer 0 represents the tile that would be in the top left corner of the correctly assembled picture.
      * The integers increment from left to right, and then up to down.
+     * The integer -1 represents the blank tile.
      *
      * @param state 2d array of integers representing tile placements.
      */
     public void putSegmentsInPlace(GameState state){
         this.removeAllViews();
+
+        Log.d(TAG, "Putting gameState: \n" + state.toString());
 
         for(int row = 0; row < mDivisions; row++){
             for(int col = 0; col < mDivisions; col++){
@@ -343,13 +346,25 @@ public class GameGrid extends RelativeLayout implements OnClickListener, View.On
     public GameState getGameState(){
         int[][] places = new int[mDivisions][mDivisions];
 
-        for(int x = 0; x < mDivisions; x++){
-            for(int y = 0; y < mDivisions; y++){
+        for(int row = 0; row < mDivisions; row++){
+            for(int col = 0; col < mDivisions; col++){
 
-                ImageSegmentView segmentView = mSegmentGrid[x][y];
+                ImageSegmentView segmentView = mSegmentGrid[row][col];
+                if(row == blankTile.y && col == blankTile.x){
+                    places[row][col] = -1;
+                }
+                else if(segmentView !=null){
+                    places[row][col] = segmentView.getCorrectIndex();
+                }
+                else{
+                    Log.d(TAG, String.format(
+                            "Null segmentView that is not the blank tile, exiting. " +
+                                    "Blanktile = (y, x) %s. %s; y, x = " +
+                                    "%s, %s", blankTile.y, blankTile.x, row, col));
 
-                //if the view is null then it is the blank tile, place -1
-                places[x][y] = segmentView == null ? -1 : segmentView.getCorrectIndex();
+                    throw new IllegalStateException(TAG + ": Null segment view not blank tile.");
+                }
+
             }
         }
 

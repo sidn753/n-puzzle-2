@@ -87,6 +87,12 @@ public class BlankToTarget extends Heuristic {
         Point blankTile = gameState.getBlankTile();
         Point targetLocation = gameState.getLocation(mTargetIndex);
         Point adjacentLocation = GameState.getAdjacent(targetLocation, mDirection);
+
+        /*
+        Log.d(TAG, String.format("Checking if solved: gamestate is \n%s" +
+                "\nblankTile is at %s, target is at %s", gameState.toString(),
+                blankTile, adjacentLocation));
+*/
         int distance = getDistance(blankTile, adjacentLocation);
 
         if(GamePlayActivity.DEBUG_VERBOSE){

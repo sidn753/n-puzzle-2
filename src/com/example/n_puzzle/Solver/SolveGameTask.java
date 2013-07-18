@@ -32,6 +32,8 @@ public class SolveGameTask extends AsyncTask<Integer, Long, Node> {
             ArrayList<Point> frozenTiles, GameState gameState){
         mContext = context;
 
+        Log.d(TAG, "Solvegametask starting for Gamestate: \n" + gameState.toString());
+
         //strategy is out of goals
         if(heuristic == null){
             this.cancel(true);

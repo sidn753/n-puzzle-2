@@ -31,7 +31,7 @@ import java.util.ArrayList;
 
 public class GamePlayActivity extends Activity implements DifficultyManagerCaller{
 	public static final String TAG = GamePlayActivity.class.getSimpleName();
-	public static boolean DEBUG_VERBOSE = false;
+	public static final boolean DEBUG_VERBOSE = false;
 
 	/**Run the preview activity only if it hasn't been run before*/
 	public static boolean initialized = false;
@@ -163,6 +163,10 @@ public class GamePlayActivity extends Activity implements DifficultyManagerCalle
     }
 
     public void onPostShuffle(GameState endState){
+        if(DEBUG_VERBOSE){
+            Log.d(TAG, "onPostShuffle, gamestate is \n" + endState);
+        }
+
         mState = endState;
     }
 
