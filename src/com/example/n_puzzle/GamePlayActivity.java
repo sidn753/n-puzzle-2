@@ -154,7 +154,7 @@ public class GamePlayActivity extends Activity implements DifficultyManagerCalle
 
         //Get the default GameGrid state (tiles in reverse order)
         mState = new GameGrid(this, mBitmap, mDifficulty.getNumDivisions(), null).getGameState();
-        shuffle();
+        //shuffle();
 
 	}
 
@@ -319,7 +319,7 @@ public class GamePlayActivity extends Activity implements DifficultyManagerCalle
     /**Have the solver AI solve the game in real time
      */
     private void startMoveMaker() {
-        mGameGrid.toggleSolveMode();
+        mGameGrid.setTouchEnabled(false);
         mMoveMaker = new MoveMaker(this, mMoveQueue);
         mMoveMaker.run();
     }
@@ -354,7 +354,7 @@ public class GamePlayActivity extends Activity implements DifficultyManagerCalle
     void moveMade(){
         mNumMoves++;
         Log.d("movemade", "" + mNumMoves);
-        if(!mGameGrid.isInSolveMode()){
+        if(mGameGrid.isTouchEnabled()){
             restartSolving();
         }
     }
@@ -364,7 +364,7 @@ public class GamePlayActivity extends Activity implements DifficultyManagerCalle
             winGame();
         }
         else{
-            mGameGrid.toggleSolveMode();;
+            mGameGrid.setTouchEnabled(true);;
             restartSolving();
         }
     }
@@ -402,7 +402,8 @@ public class GamePlayActivity extends Activity implements DifficultyManagerCalle
         Toast.makeText(this, "Game Complete! It took " + mNumMoves +
                 " moves", Toast.LENGTH_LONG).show();
 
-        mGameGrid.toggleSolveMode();
+        mGameGrid.setTouchEnabled(false);
+        mGameGrid.setSolved(true);
 	}
 
     /**Free the memory used by the GameGrid*/

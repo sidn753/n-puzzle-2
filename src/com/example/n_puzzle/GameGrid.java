@@ -31,7 +31,8 @@ public class GameGrid extends RelativeLayout implements OnClickListener, View.On
 	private Point blankTile;
 
     /**If the user has clicked the solveGoal button, we have to change the onclick listener*/
-    private boolean solveMode;
+    private boolean touchEnabled = true;
+    private boolean solved = false;
 
 
 	/**The GamePlayActivity containing this Game Grid*/
@@ -247,6 +248,7 @@ public class GameGrid extends RelativeLayout implements OnClickListener, View.On
 	 */
 	public void onClick(View touchedView) {
         Log.d(TAG, "onClick");
+        if(!solved)        
         touched((ImageSegmentView) touchedView);
 
     }
@@ -275,8 +277,8 @@ public class GameGrid extends RelativeLayout implements OnClickListener, View.On
 
     private void touched(ImageSegmentView touchedView) {
         //If the game is in solveMode, stop solvemode
-        if(solveMode){
-            toggleSolveMode();
+        if(!solved && !touchEnabled){
+            setTouchEnabled(true);
             mContext.stopMoveMaker();
             return;
         }
@@ -327,17 +329,23 @@ public class GameGrid extends RelativeLayout implements OnClickListener, View.On
     }
 
 
-
 	/**Returns true iff all of the imageSegments are in their "correct" positions,
 	 * i.e., they are in the correctPlaces they were in the original unshuffled image
 	 *
 	 * @return true if all the ImageSegments are in their correct positions
 	 */
 	public boolean isSolved(){
+		if(solved) return true;
+		
 		for(ImageSegmentView segment: mSegmentViews){
-			if(!segment.inOriginalPosition()) return false;
+			if(!segment.inOriginalPosition()){
+				solved = false;
+				return false;
+			}
 		}
-		return true;
+		
+		solved = true;
+		return solved;
 	}
 
 
@@ -364,10 +372,8 @@ public class GameGrid extends RelativeLayout implements OnClickListener, View.On
 
                     throw new IllegalStateException(TAG + ": Null segment view not blank tile.");
                 }
-
             }
         }
-
         return new GameState(places);
     }
 
@@ -376,14 +382,17 @@ public class GameGrid extends RelativeLayout implements OnClickListener, View.On
         return mSegmentGrid[row][col];
     }
 
-    public void toggleSolveMode(){
-        solveMode = !solveMode;
+    public void setTouchEnabled(boolean enabled){
+        touchEnabled = enabled;
     }
 
-    public boolean isInSolveMode(){
-        return solveMode;
+    public boolean isTouchEnabled(){
+        return touchEnabled;
     }
 
+    public void setSolved(boolean solved){
+    	this.solved = solved;
+    }
 
 
     /**Helper class- builds cropped segments of the image associated with
