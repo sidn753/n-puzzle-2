@@ -283,7 +283,6 @@ public class GameGrid extends RelativeLayout implements OnClickListener, View.On
         if(!solved && !touchEnabled){
             setTouchEnabled(true);
             mContext.stopMoveMaker();
-            return;
         }
 
         //Otherwise make a move based on the view that was touched

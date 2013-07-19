@@ -82,7 +82,6 @@ public class SolutionStrategy {
 
         if(moveBlank){
 
-
             //Get blank tile in place for line end maneuver
             if(atEndOfRow){
 

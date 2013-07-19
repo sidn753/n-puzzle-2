@@ -28,6 +28,7 @@ import com.example.n_puzzle.Solver.SolveGameTask;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.zip.Checksum;
 
 public class GamePlayActivity extends Activity implements DifficultyManagerCaller{
 	public static final String TAG = GamePlayActivity.class.getSimpleName();
@@ -126,7 +127,7 @@ public class GamePlayActivity extends Activity implements DifficultyManagerCalle
 
         //on out of memory error, alert user and go back to the image selection screen
         catch(OutOfMemoryError e){
-        	Toast.makeText(this, "Image file is too big!", Toast.LENGTH_LONG).show();
+        	Toast.makeText(this, "Ran out of memory!", Toast.LENGTH_LONG).show();
 			backToSelect();	
         }
 
@@ -134,7 +135,7 @@ public class GamePlayActivity extends Activity implements DifficultyManagerCalle
 	}
 
 	private void imageNotFoundToast() {
-		Toast.makeText(this, "Sorry, couldn't fetch the image.", Toast.LENGTH_SHORT);
+		Toast.makeText(this, "Sorry, couldn't fetch the image.", Toast.LENGTH_SHORT).show();
 	}
 
 	
@@ -188,6 +189,8 @@ public class GamePlayActivity extends Activity implements DifficultyManagerCalle
 		setContentView(R.layout.activity_gameplay);
 		mLayout = (LinearLayout)findViewById(R.id.gameview);
 		putGameGrid();
+		if(mGameGrid.isSolved()) winGame();
+		
 		started = true;
         restartSolving();
 	}
@@ -262,6 +265,13 @@ public class GamePlayActivity extends Activity implements DifficultyManagerCalle
     	mState = mGameGrid.getGameState();
     	
     	GameState stateAfterRandomMove = mMoveQueue.addRandomMove(mState, frozenTiles);
+    	
+    	//happens if there are no legal moves left given the frozen tiles
+    	if(stateAfterRandomMove == null){
+    		stopMoveMaker();
+    		
+    	}
+    	
     	solveNextTask(stateAfterRandomMove);
     }
 
