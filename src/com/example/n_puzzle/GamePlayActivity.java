@@ -101,21 +101,26 @@ public class GamePlayActivity extends Activity implements DifficultyManagerCalle
 
             Uri data = i.getData();
             if(data == null){
-                Toast.makeText(this, "N-Puzzle failed to get the image data",
-                        Toast.LENGTH_LONG).show();
+                imageNotFoundToast();
                 backToSelect();
             }
             else{
                 //fetch and decode the image data
                 InputStream inputStream = getContentResolver().openInputStream(data);
                 mBitmap = BitmapFactory.decodeStream(inputStream);
-
-                //Set the image
-                mPreviewImage.setImageBitmap(mBitmap);
+                
+                if(mBitmap == null){
+                	imageNotFoundToast();
+                	backToSelect();
+                }
+                else{
+                	//Set the image
+                	mPreviewImage.setImageBitmap(mBitmap);
+                }
             }
         }
         catch(FileNotFoundException f){
-            Toast.makeText(this, "The file couldn't be loaded", Toast.LENGTH_SHORT).show();
+            imageNotFoundToast();
             backToSelect();
         }
 
@@ -128,6 +133,10 @@ public class GamePlayActivity extends Activity implements DifficultyManagerCalle
         mNumMoves = 0;
 	}
 
+	private void imageNotFoundToast() {
+		Toast.makeText(this, "Sorry, couldn't fetch the image.", Toast.LENGTH_SHORT);
+	}
+
 	
 	/**Initialize and start the countdowntimer.
      * During the countdown, shuffle the image asynchronously.
@@ -137,7 +146,6 @@ public class GamePlayActivity extends Activity implements DifficultyManagerCalle
         txt_countdown = (TextView)findViewById(R.id.txt_countdown);
         txt_countdown.setText(Long.toString(PREVIEW_COUNTDOWN));
         mCountdown = new CountDownTimer(PREVIEW_COUNTDOWN * 1000, 1000){
-
 
         	@Override
 			public void onTick(long arg0) {
@@ -157,9 +165,9 @@ public class GamePlayActivity extends Activity implements DifficultyManagerCalle
 		mDifficulty = DifficultyManager.getCurrentDifficulty(this);
 
         //Get the default GameGrid state (tiles in reverse order)
-        mState = new GameGrid(this, mBitmap, mDifficulty.getNumDivisions(), null).getGameState();
+        mState = GameState.buildDefaultShuffle(mDifficulty.getNumDivisions());
+        
         shuffle();
-
 	}
 
     private void shuffle(){
@@ -170,7 +178,6 @@ public class GamePlayActivity extends Activity implements DifficultyManagerCalle
         if(DEBUG_VERBOSE){
             Log.d(TAG, "onPostShuffle, gamestate is \n" + endState);
         }
-
         mState = endState;
     }
 
@@ -197,7 +204,13 @@ public class GamePlayActivity extends Activity implements DifficultyManagerCalle
 		}		
 		//Go back to image selection if we run out of memory
 		catch(OutOfMemoryError e){
+			Log.d(TAG, e.toString());
 			Toast.makeText(this, "Image file is too big!", Toast.LENGTH_LONG).show();
+			backToSelect();
+		}
+		catch(IllegalArgumentException e){
+			Log.d(TAG, e.toString());
+			imageNotFoundToast();
 			backToSelect();
 		}
 	}
@@ -445,8 +458,13 @@ public class GamePlayActivity extends Activity implements DifficultyManagerCalle
             mSolveTask.cancel(true);
             mSolveTask = null;
         }
+        if(mGameGrid != null) mGameGrid.freeMemory();
         mGameGrid = null;
         mPreviewImage = null;
+        if(mCountdown != null){
+        	mCountdown.cancel();
+        	mCountdown = null;
+        }
         System.gc();
     }
 
@@ -460,8 +478,8 @@ public class GamePlayActivity extends Activity implements DifficultyManagerCalle
 	/** free image memory when this activity finishes.	 */
 	@Override
 	public void finish(){
-		super.finish();
 		freeMemory();
+		super.finish();
 	}
 
     /**On orientation change we want to keep the location of the

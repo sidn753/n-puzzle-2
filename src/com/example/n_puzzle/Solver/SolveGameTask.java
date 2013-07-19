@@ -66,6 +66,7 @@ public class SolveGameTask extends AsyncTask<Integer, Long, Node> {
             Log.d(TAG, String.format("Solver stopping itself after %s seconds with no solution" +
                     ". %s nodes were checked.", timePassed/1000, values[0]));
             this.cancel(true);
+            mContext.solverFailed();
         }
 
         publishProgress(values);

@@ -1,16 +1,16 @@
 package com.example.n_puzzle;
 
+import java.util.ArrayList;
+
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Point;
+import android.graphics.drawable.BitmapDrawable;
+import android.util.Log;
 import android.view.DragEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.RelativeLayout;
-
-import java.util.ArrayList;
-
-import android.util.Log;
 
 /**Data structure to hold a set of bitmap sections.
  * 
@@ -38,9 +38,12 @@ public class GameGrid extends RelativeLayout implements OnClickListener, View.On
 	/**The GamePlayActivity containing this Game Grid*/
 	private GamePlayActivity mContext;
 	
-	public GameGrid(GamePlayActivity context, Bitmap bitmap, int numDivisions, GameState state) {
+	public GameGrid(GamePlayActivity context, Bitmap bitmap, int numDivisions, GameState state) 
+			throws IllegalArgumentException{
 		super(context);
 		mContext = context;
+		
+		if(bitmap == null) throw new IllegalArgumentException("gamegrid image is null");
         mImage = bitmap;
 
 		mDivisions = numDivisions;
@@ -392,6 +395,14 @@ public class GameGrid extends RelativeLayout implements OnClickListener, View.On
 
     public void setSolved(boolean solved){
     	this.solved = solved;
+    }
+    
+    /**recycle all the segments*/
+    public void freeMemory(){
+    	for(ImageSegmentView segment : mSegmentViews){
+    		BitmapDrawable bmd = (BitmapDrawable)segment.getDrawable();
+    		bmd.getBitmap().recycle();
+    	}
     }
 
 
