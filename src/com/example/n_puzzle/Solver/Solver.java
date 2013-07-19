@@ -100,8 +100,15 @@ public class Solver {
                 mStatus = Status.FAILED;
                 break;
             }
-
-            mVisitedStates.add(nextNode.getEndState());
+            
+            try{
+            	mVisitedStates.add(nextNode.getEndState());
+            }
+            catch(OutOfMemoryError e){
+            	Log.d(TAG, "Ran out of internal memory while solving");
+            	mStatus = Status.FAILED;
+            	break;
+            }
 
             //Check if this node solves the goal, return it if so
             if(mHeuristic.checkIfSolved(nextNode)){

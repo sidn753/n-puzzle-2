@@ -32,7 +32,12 @@ import java.util.zip.Checksum;
 
 public class GamePlayActivity extends Activity implements DifficultyManagerCaller{
 	public static final String TAG = GamePlayActivity.class.getSimpleName();
+	
+	/**Application-wide flag for more intense logging.*/
 	public static final boolean DEBUG_VERBOSE = false;
+	
+	/**If this var isn't the empty string, the game will start with the given gamestate */
+	public static final String DEBUG_GAMESTATE_CSV = "";
 
 	/**Run the preview activity only if it hasn't been run before*/
 	public static boolean initialized = false;
@@ -188,6 +193,11 @@ public class GamePlayActivity extends Activity implements DifficultyManagerCalle
 	private void startGame(){
 		setContentView(R.layout.activity_gameplay);
 		mLayout = (LinearLayout)findViewById(R.id.gameview);
+		
+		if(!DEBUG_GAMESTATE_CSV.equals("")){
+			mState = GameState.fromCSV(DEBUG_GAMESTATE_CSV);
+		}
+		
 		putGameGrid();
 		if(mGameGrid.isSolved()) winGame();
 		

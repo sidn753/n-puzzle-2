@@ -232,7 +232,7 @@ public class SolutionStrategy {
     /**The tile to insert is frozen while the blank tile is being prepared for line end
      * maneuvers. After the line end maneuver is fetched, the tile should be unfrozen again.
      */
-    private void temporaryUnfreeze(){
+    private void tempUnfreeze(){
         mFrozenTiles.remove(temporaryFreeze);
     }
 
@@ -342,7 +342,7 @@ public class SolutionStrategy {
         moveBlank = true;
 
         //unfreeze the tile that was temporarily frozen for the line end maneuver
-        temporaryUnfreeze();
+        tempUnfreeze();
 
         return result;
     }

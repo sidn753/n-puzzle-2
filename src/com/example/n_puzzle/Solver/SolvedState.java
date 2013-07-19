@@ -28,7 +28,7 @@ public class SolvedState extends GameState {
         int index = 0;
         for(int i = 0; i < numDivisions; i++){
             for(int j = 0; j < numDivisions; j++){
-                super.places[i][j] = index;
+                super.mPlaces[i][j] = index;
                 correctPlaces.add(new CorrectPlace(index, i, j));
                 index++;
             }

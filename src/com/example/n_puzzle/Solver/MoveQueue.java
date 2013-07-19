@@ -56,6 +56,8 @@ public class MoveQueue implements Queue<GameState.Direction> {
     	int size = possibleMoves.size();
     	if(size == 0){
     		Log.d(TAG, "Adding random move but somehow there are no legal moves left");
+    		Log.d(TAG, "BeginState" + beginState.toCSV());
+    		Log.d(TAG, "EndState:" + endState.toCSV());
     		return null;
     	}
     	

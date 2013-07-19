@@ -1,15 +1,10 @@
 package com.example.n_puzzle;
 
-import android.graphics.Point;
-
 import java.util.ArrayList;
 import java.util.Arrays;
+
 import android.graphics.Point;
 import android.util.Log;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Queue;
 
 /**The GameState captures the placements of the tiles.
  *
@@ -31,7 +26,7 @@ public class GameState {
     public final static String TAG = "GameState";
 
     protected int numDivisions;
-    protected int[][] places;
+    protected int[][] mPlaces;
     protected Point blankTile;
 
     public static enum Direction {
@@ -41,7 +36,7 @@ public class GameState {
 
     public GameState(int numDivisions){
         this.numDivisions = numDivisions;
-        this.places = new int[numDivisions][numDivisions];
+        this.mPlaces = new int[numDivisions][numDivisions];
         this.blankTile = new Point(numDivisions - 1, numDivisions - 1);
     }
 
@@ -55,29 +50,83 @@ public class GameState {
 
     public GameState(int[][] places){
         this.numDivisions = places.length;
-        this.places = places;
+        this.mPlaces = places;
         this.blankTile = findBlankTile();
     }
 
     public GameState(int[][] places, Point blankTile){
         this.numDivisions = places.length;
-        this.places = places;
+        this.mPlaces = places;
         this.blankTile = blankTile;
     }
 
     /**Create a new GameState by cloning the other*/
     public GameState(GameState other){
-        this.numDivisions = other.places.length;
-        this.places = new int[numDivisions][numDivisions];
+        this.numDivisions = other.mPlaces.length;
+        this.mPlaces = new int[numDivisions][numDivisions];
         this.blankTile = new Point();
         this.blankTile.y = other.blankTile.y; this.blankTile.x = other.blankTile.x;
 
         for(int row = 0; row < numDivisions; row++){
             for(int col = 0; col < numDivisions; col++){
-                this.places[row][col] = other.places[row][col];
+                this.mPlaces[row][col] = other.mPlaces[row][col];
             }
         }
     }
+    
+    /**For testing purposes- allows a gamestate to be created
+     * easily from a string of comma separated values.
+     * 
+     * The format is e.g.:
+     * 14,13,12,11,10,9,8,7,6,5,4,3,2,1,0,-1
+     * 
+     * which is equivalent to the grid:
+     * 
+     * 14 13 12 11
+     * 10  9  8  7
+     *  6  5  4  3
+     *	2  1  0 -1  
+     *
+     * @param csv a string representing comma separated values
+     * @return a gamestate with the given layout
+     */
+    public static GameState fromCSV(String csv){
+    	int len = csv.length()/2;
+    	int numDiv = (int) Math.sqrt(len);
+    	
+    	String[] values = csv.split(",");
+    	
+    	GameState newState = new GameState(numDiv);
+    	
+    	int index = 0;
+    	for(int row = 0; row < newState.numDivisions; row++){
+            for(int col = 0; col < newState.numDivisions; col++){
+                String value = values[index];
+                int intValue = Integer.parseInt(value);
+                newState.mPlaces[row][col] = intValue;
+                index++;
+            }
+        }
+    	
+    	return newState;
+    }
+    
+    /**
+     * @return a comma separated values representation of the gamestate's placements.
+     */
+    public String toCSV(){
+    	StringBuffer buffer = new StringBuffer();
+    	for(int row = 0; row < numDivisions; row++){
+            for(int col = 0; col < numDivisions; col++){
+                buffer.append(this.mPlaces[row][col]);
+                buffer.append(',');
+            }
+        }
+    	
+    	return buffer.toString();
+    }
+    
+   
 
     /**The default gamestate places the tiles in reverse order. This ensures solvability.
      * If the number of tiles on the board are odd, the final two tiles must be swapped
@@ -94,7 +143,7 @@ public class GameState {
 
         for(int row = 0; row < numDivisions; row++){
             for(int col = 0; col < numDivisions; col++){
-                state.places[row][col] = index;
+                state.mPlaces[row][col] = index;
                 index--;
             }
         }
@@ -103,16 +152,16 @@ public class GameState {
         *we need to swap the 1 and 2 tiles to ensure solvability.
          */
         if(numDivisions % 2  == 0){
-            int temp = state.places[numDivisions - 1][numDivisions - 2];
-            state.places[numDivisions - 1][numDivisions - 2] = state.places[numDivisions - 1][numDivisions - 3];
-            state.places[numDivisions - 1][numDivisions - 3] = temp;
+            int temp = state.mPlaces[numDivisions - 1][numDivisions - 2];
+            state.mPlaces[numDivisions - 1][numDivisions - 2] = state.mPlaces[numDivisions - 1][numDivisions - 3];
+            state.mPlaces[numDivisions - 1][numDivisions - 3] = temp;
         }
 
         return state;
     }
 
     public int getByLocation(int row, int col){
-        return places[row][col];
+        return mPlaces[row][col];
     }
 
     public Point findActualLocation(int index){
@@ -120,7 +169,7 @@ public class GameState {
 
         for(int row = 0; row < numDivisions; row++){
             for(int col = 0; col < numDivisions; col++){
-                if(places[row][col] == index){
+                if(mPlaces[row][col] == index){
                     result = new Point();
                     result.y = row;
                     result.x = col;
@@ -142,7 +191,7 @@ public class GameState {
             return false;
         }
 
-        return Arrays.deepHashCode(places) == Arrays.deepHashCode(other.places);
+        return Arrays.deepHashCode(mPlaces) == Arrays.deepHashCode(other.mPlaces);
 
     }
 
@@ -151,7 +200,7 @@ public class GameState {
      * hashcode based on the contents of the array*/
     @Override
     public int hashCode() {
-        return Arrays.deepHashCode(places);
+        return Arrays.deepHashCode(mPlaces);
     }
 
 
@@ -183,7 +232,7 @@ public class GameState {
                 moves.add(Direction.LEFT);
             }
         }
-        if(blankTile.x < places.length - 1){
+        if(blankTile.x < mPlaces.length - 1){
             prospect = getAdjacent(blankTile, Direction.RIGHT);
             if(!frozenTiles.contains(prospect)){
                 moves.add(Direction.RIGHT);
@@ -195,7 +244,7 @@ public class GameState {
                 moves.add(Direction.UP);
             }
         }
-        if(blankTile.y < places.length - 1){
+        if(blankTile.y < mPlaces.length - 1){
             prospect = getAdjacent(blankTile, Direction.DOWN);
             if(!frozenTiles.contains(prospect)){
                 moves.add(Direction.DOWN);
@@ -272,9 +321,9 @@ public class GameState {
         }
 
         //swap the blank tile with the selected tile
-        int temp = newState.places[yCoord][xCoord];
-        newState.places[yCoord][xCoord] = -1;
-        newState.places[blankTile.y][blankTile.x] = temp;
+        int temp = newState.mPlaces[yCoord][xCoord];
+        newState.mPlaces[yCoord][xCoord] = -1;
+        newState.mPlaces[blankTile.y][blankTile.x] = temp;
         newState.blankTile.x =   xCoord;
         newState.blankTile.y = yCoord;
 
@@ -284,9 +333,9 @@ public class GameState {
 
     /**Relocate the blank tile*/
     public Point findBlankTile(){
-        for(int row = 0; row < places.length; row++){
-            for(int col = 0; col < places[0].length; col++){
-                if(places[row][col] == -1){
+        for(int row = 0; row < mPlaces.length; row++){
+            for(int col = 0; col < mPlaces[0].length; col++){
+                if(mPlaces[row][col] == -1){
                     Point p = new Point();
                     p.y = row;
                     p.x = col;
@@ -324,7 +373,7 @@ public class GameState {
         //find the target
         for(int row = 0; row < numDivisions; row++){
             for(int col = 0; col < numDivisions; col++){
-                if(places[row][col] == index){
+                if(mPlaces[row][col] == index){
                     location.x = col;
                     location.y = row;
                 }
@@ -337,9 +386,9 @@ public class GameState {
     @Override
     public String toString(){
         String s = " ";
-        for(int row = 0; row < places.length; row++){
-            for(int col = 0; col < places.length; col++){
-                s = s + " " + places[row][col];
+        for(int row = 0; row < mPlaces.length; row++){
+            for(int col = 0; col < mPlaces.length; col++){
+                s = s + " " + mPlaces[row][col];
             }
             s+= '\n';
         }
