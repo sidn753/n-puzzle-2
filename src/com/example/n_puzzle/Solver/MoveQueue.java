@@ -53,7 +53,13 @@ public class MoveQueue implements Queue<GameState.Direction> {
     	GameState endState = this.getStateAfterMoves(beginState);
     	ArrayList<GameState.Direction> possibleMoves= endState.possibleMoves(frozenTiles);
     	
-    	Direction move = possibleMoves.get(new Random().nextInt(possibleMoves.size()));
+    	int size = possibleMoves.size();
+    	if(size == 0){
+    		Log.d(TAG, "Adding random move but somehow there are no legal moves left");
+    		return null;
+    	}
+    	
+		Direction move = possibleMoves.get(new Random().nextInt(size));
 		
     	Log.d(TAG, "Adding random move: " + move);
     	this.add(move);
