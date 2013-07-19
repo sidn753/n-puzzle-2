@@ -73,7 +73,7 @@ public class Solver {
 
 
         //Don't look at the opening state more than once
-        mVisitedStates.add(mBeginState);
+        addToVisitedStates(mBeginState);
 
         /*Check out the legal moves for the first state. Add
         the resulting states to the priority queue*/
@@ -101,22 +101,15 @@ public class Solver {
                 break;
             }
             
-            try{
-            	mVisitedStates.add(nextNode.getEndState());
-            }
-            catch(OutOfMemoryError e){
-            	Log.d(TAG, "Ran out of internal memory while solving");
-            	mStatus = Status.FAILED;
-            	break;
-            }
-
+            GameState endState = nextNode.getEndState();
+            
             //Check if this node solves the goal, return it if so
             if(mHeuristic.checkIfSolved(nextNode)){
 
               Log.d(TAG, "Solution found!");
 
-                if(true){
-                    Log.d(TAG, nextNode.getEndState().toString());
+                if(GamePlayActivity.DEBUG_VERBOSE){
+                    Log.d(TAG, endState.toString());
                     int i = 1;
                     for(GameState.Direction move : nextNode.getMoveQueue()){
                         Log.d(TAG, "Solution Direction " + i++ + " " + move);
@@ -126,6 +119,9 @@ public class Solver {
                 break;
             }
             else{
+            	//returns false if an out of memory error occurs
+                if(!addToVisitedStates(endState)) break;
+                
                 addSuccessors(nextNode);
             }
         }
@@ -135,6 +131,23 @@ public class Solver {
         }
 
         return nextNode;
+    }
+    
+    public boolean addToVisitedStates(GameState gameState){
+    	try{
+        	mVisitedStates.add(gameState);
+        	
+        	if(mHeuristic instanceof SolveLast6){
+        		Log.d(TAG, "adding state to visistedStates: " + gameState.toCSV());
+        	}
+        }
+        catch(OutOfMemoryError e){
+        	Log.d(TAG, "Ran out of internal memory while solving");
+        	mStatus = Status.FAILED;
+        	return false;
+        }
+    	
+    	return true;
     }
 
     private void addSuccessors(Node node){
@@ -157,7 +170,7 @@ public class Solver {
             }
             else{
 
-                if(GamePlayActivity.DEBUG_VERBOSE){
+                if(mHeuristic instanceof SolveLast6){
                     Log.d(TAG, String.format("Adding a new node to the PriorityQueue. " +
                             "The previous state is \n%s\n" +
                             "The Direction is %s, and the resultant state is \n%s\n ",

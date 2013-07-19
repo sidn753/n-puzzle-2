@@ -37,7 +37,7 @@ public class GamePlayActivity extends Activity implements DifficultyManagerCalle
 	public static final boolean DEBUG_VERBOSE = false;
 	
 	/**If this var isn't the empty string, the game will start with the given gamestate */
-	public static final String DEBUG_GAMESTATE_CSV = "";
+	public static final String DEBUG_GAMESTATE_CSV = "0,7,4,-1,6,5,1,2,3,";
 
 	/**Run the preview activity only if it hasn't been run before*/
 	public static boolean initialized = false;
@@ -198,7 +198,11 @@ public class GamePlayActivity extends Activity implements DifficultyManagerCalle
 			mState = GameState.fromCSV(DEBUG_GAMESTATE_CSV);
 		}
 		
+		Log.d(TAG, "BeginState for this game: " + mState.toCSV());
+		
 		putGameGrid();
+		if(mGameGrid == null) return;
+		
 		if(mGameGrid.isSolved()) winGame();
 		
 		started = true;
@@ -279,10 +283,8 @@ public class GamePlayActivity extends Activity implements DifficultyManagerCalle
     	//happens if there are no legal moves left given the frozen tiles
     	if(stateAfterRandomMove == null){
     		stopMoveMaker();
-    		
     	}
-    	
-    	solveNextTask(stateAfterRandomMove);
+    	//solveNextTask(stateAfterRandomMove);
     }
 
     /**SolveGameTask calls this method in onPostExecute.
