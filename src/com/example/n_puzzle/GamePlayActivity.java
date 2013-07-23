@@ -238,12 +238,15 @@ public class GamePlayActivity extends Activity implements DifficultyManagerCalle
 /////////////////////////////////////////////////////////////////////////
 //Solver
 /////////////////////////////////////////////////////////////////////////
+	
+	private static long startSolvingTime;
     /**The game solver runs in a background thread.
      * Whenever the user makes a move the solver
      * must be restarted.
      */
     private void restartSolving(){
         Log.d(TAG, "Restarting solver");
+        startSolvingTime = System.currentTimeMillis();
 
         if(mSolveTask != null){
             mSolveTask.cancel(true);
@@ -255,11 +258,9 @@ public class GamePlayActivity extends Activity implements DifficultyManagerCalle
         }
 
         mMoveQueue.clear();
-        //mState = mGameGrid.getGameState();
         mSolutionStrategy = new SolutionStrategy(mState, mDifficulty);
 
         solveNextTask(mState);
-
     }
 
     public void solveNextTask(GameState gameState){
@@ -267,11 +268,17 @@ public class GamePlayActivity extends Activity implements DifficultyManagerCalle
         Heuristic heuristic = mSolutionStrategy.getNextGoal(gameState);
         ArrayList<Point> frozenTiles = mSolutionStrategy.getFrozenTiles();
 
-        mSolveTask = new SolveGameTask(this, heuristic, frozenTiles, gameState);
-        mSolveTask.execute();
+        //solver finished
+        if(heuristic == null){
+        	Log.d(TAG, "Solver finished: it took " + (System.currentTimeMillis() - startSolvingTime) + " milliseconds");
+        }
+        else{
+	        mSolveTask = new SolveGameTask(this, heuristic, frozenTiles, gameState);
+	        mSolveTask.execute();
+        }
     }
     
-    static int tryCount = 0;
+   
     
     /**If the solver fails for some reason, we add a random move and try again. */
     public void solverFailed(){
