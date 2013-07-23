@@ -190,9 +190,20 @@ public class GameState {
         else {
             return false;
         }
-
-        return Arrays.deepHashCode(mPlaces) == Arrays.deepHashCode(other.mPlaces);
-
+        
+        try{
+	        for(int row = 0; row < numDivisions; row++){
+	            for(int col = 0; col < numDivisions; col++){
+	                if(mPlaces[row][col] != other.mPlaces[row][col]) return false;
+	            }
+	        }
+        }
+        catch(IndexOutOfBoundsException e){
+        	return false;
+        }
+        
+        return true;
+        //return this.toCSV().equals(other.toCSV());
     }
 
 

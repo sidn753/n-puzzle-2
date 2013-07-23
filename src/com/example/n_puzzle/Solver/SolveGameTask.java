@@ -23,7 +23,7 @@ public class SolveGameTask extends AsyncTask<Integer, Long, Node> {
     /**If the thread runs longer than this amount, it stops itself.
      * Solving a goal should not take this long.
      */
-    public static final long MAX_TIME_ALLOWED = 10000;
+    public static final long MAX_TIME_ALLOWED = 30000;
 
     //hide default constructor
     private SolveGameTask(){}
@@ -95,11 +95,10 @@ public class SolveGameTask extends AsyncTask<Integer, Long, Node> {
         }
 
         int numMoves = result.getMoveQueue().size();
-        Log.d(TAG, String.format("Solver has solved the current goal. It took %s seconds. There are " +
+        Log.d(TAG, String.format("Solver has solved the current goal. It took %s milliseconds. There are " +
                 "%s moves in the solution's MoveQueue.",
-                runTime/1000, numMoves));
+                runTime, numMoves));
         mContext.processSolvedGoal(result);
     }
-
 
 }

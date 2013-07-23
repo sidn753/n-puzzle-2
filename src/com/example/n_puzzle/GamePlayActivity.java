@@ -163,7 +163,7 @@ public class GamePlayActivity extends Activity implements DifficultyManagerCalle
 				mPreviewImage = null;
 				System.gc();
 				initialized = true; 	//countdown has run, don't run countdown again on startup
-                    startGame();
+                startGame();
 			}
 			        	
         }.start();
@@ -185,6 +185,7 @@ public class GamePlayActivity extends Activity implements DifficultyManagerCalle
             Log.d(TAG, "onPostShuffle, gamestate is \n" + endState);
         }
         mState = endState;
+        restartSolving();
     }
 
 /////////////////////////////////////////////////////////////////////////
@@ -196,6 +197,7 @@ public class GamePlayActivity extends Activity implements DifficultyManagerCalle
 		
 		if(!DEBUG_GAMESTATE_CSV.equals("")){
 			mState = GameState.fromCSV(DEBUG_GAMESTATE_CSV);
+			restartSolving();
 		}
 		
 		Log.d(TAG, "BeginState for this game: " + mState.toCSV());
@@ -206,7 +208,6 @@ public class GamePlayActivity extends Activity implements DifficultyManagerCalle
 		if(mGameGrid.isSolved()) winGame();
 		
 		started = true;
-        restartSolving();
 	}
 
 	/**Create a game grid for this gameplay session.
@@ -254,7 +255,7 @@ public class GamePlayActivity extends Activity implements DifficultyManagerCalle
         }
 
         mMoveQueue.clear();
-        mState = mGameGrid.getGameState();
+        //mState = mGameGrid.getGameState();
         mSolutionStrategy = new SolutionStrategy(mState, mDifficulty);
 
         solveNextTask(mState);
@@ -263,7 +264,7 @@ public class GamePlayActivity extends Activity implements DifficultyManagerCalle
 
     public void solveNextTask(GameState gameState){
 
-        Heuristic heuristic = mSolutionStrategy.getNextGoal();
+        Heuristic heuristic = mSolutionStrategy.getNextGoal(gameState);
         ArrayList<Point> frozenTiles = mSolutionStrategy.getFrozenTiles();
 
         mSolveTask = new SolveGameTask(this, heuristic, frozenTiles, gameState);
@@ -276,41 +277,7 @@ public class GamePlayActivity extends Activity implements DifficultyManagerCalle
     public void solverFailed(){
     	Log.d(TAG, "Solver failed.");
     	
-    	/*//remove the last move so we can try a new alternative
-    	if(tryCount > 0){
-    		mMoveQueue.removeLastMove();
-    	}*/
-    	
-    	ArrayList<Point> frozenTiles = mSolutionStrategy.getFrozenTiles();
-    	
-    	mState = mGameGrid.getGameState();
-    	
-    	/*//try each move in succession
-		GameState stateAfterNextAvailableMove = mMoveQueue.addNextAvailableMove(mState, frozenTiles, tryCount);
-				
-		if(stateAfterNextAvailableMove != null){
-			Log.d(TAG, "Trying next available move: " + tryCount);
-			tryCount++;
-			solveNextTask(stateAfterNextAvailableMove);
-		}*/
-		
-		//if we've tried all possible moves, make a random move and keep going
-		//else
-		{
-			/*tryCount = 0;
-			GameState stateAfterRandomMove = mMoveQueue.addRandomMove(mState, frozenTiles);
-			
-			If there are no legal moves left given the frozen tiles, we're stuck. 
-			if(stateAfterRandomMove == null){
-				stopMoveMaker();
-			}
-			else{
-				Log.d(TAG, "Random move made, solving for gamestate: \n" + stateAfterRandomMove.toString());
-				solveNextTask(stateAfterRandomMove);
-			}*/
-		}
-    	
-    	
+    	//TODO
     }
 
     /**SolveGameTask calls this method in onPostExecute.
@@ -323,7 +290,7 @@ public class GamePlayActivity extends Activity implements DifficultyManagerCalle
 
         Log.d(TAG, "Solver finished. adding moves to MoveQueue");
 
-        mSolutionStrategy.processSolvedGoal();
+        mSolutionStrategy.processSolvedGoal(result.getEndState());
 
         mMoveQueue.addAll(result.getMoveQueue());
         

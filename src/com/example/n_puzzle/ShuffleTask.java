@@ -15,7 +15,8 @@ public class ShuffleTask extends AsyncTask<GameState, Integer, GameState>{
 
     private static final String TAG = ShuffleTask.class.getSimpleName();
 
-    private static final int MAX_MOVES = 100;
+    private static final int MAX_SHUFFLES = 200;
+    private static final int MIN_SHUFFLES = 50;
     private static Random rand;
 
     private GamePlayActivity mContext;
@@ -27,19 +28,19 @@ public class ShuffleTask extends AsyncTask<GameState, Integer, GameState>{
     public static GameState shuffle(GameState beginState){
         if(rand == null) rand = new Random();
 
-        final int numMoves = rand.nextInt(MAX_MOVES);
+        final int minShuffles = rand.nextInt(MAX_SHUFFLES - MIN_SHUFFLES) + MIN_SHUFFLES;
 
         Log.d(TAG, "Shuffling");
 
         GameState endState = beginState;
 
-        for(int i = 0; i < numMoves; i++){
+        for(int i = 0; i < minShuffles; i++){
             ArrayList<GameState.Direction> moves = endState.possibleMoves(null);
             GameState.Direction move = moves.get(rand.nextInt(moves.size()));
             endState = endState.makeMove(move);
         }
 
-        Log.d(TAG, String.format("Shuffled %s times, resulting state: \n%s", numMoves,
+        Log.d(TAG, String.format("Shuffled %s times, resulting state: \n%s", minShuffles,
                 endState.toString()));
 
         return endState;

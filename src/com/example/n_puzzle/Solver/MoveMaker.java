@@ -28,7 +28,7 @@ public class MoveMaker implements Runnable{
         mHandler = new Handler();
         mContext = context;
 
-        Log.d(TAG, "Initialized new Direction Maker");
+        Log.d(TAG, "Initialized new Move Maker");
     }
 
     /**The thread uses a handler

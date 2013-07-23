@@ -58,8 +58,8 @@ public class SolutionStrategy {
             Point correct = GameState.getCorrectLocationForIndex(indexToSolve, ROW_LENGTH);
             Point actual = gameState.getLocation(indexToSolve);
             if(!correct.equals(actual)){
-            	Log.d(TAG, String.format("Point actual: %s, Point correct: %s", actual, correct));
-            	Log.d(TAG, "index " + indexToSolve + " is not in the correct place, stopping freezes");
+            	/*Log.d(TAG, String.format("Point actual: %s, Point correct: %s", actual, correct));
+            	Log.d(TAG, "index " + indexToSolve + " is not in the correct place, stopping freezes");*/
                 break;
             }
 
@@ -67,16 +67,17 @@ public class SolutionStrategy {
             if(!inLastSix(indexToSolve)){
 	            Log.d(TAG, indexToSolve + " is already solved, freezing");
 	            freezeIndex(indexToSolve);
-	            
             }
             getNextIndex();
         }
     }
 
 
-    public Heuristic getNextGoal(){
+    public Heuristic getNextGoal(GameState gameState){
         Heuristic nextHeuristic = null;
 
+        getFirstUnsolvedIndex(gameState);
+        
         //Everything is solved
         if(mFinished){
             Log.d(TAG, "Solved everything, solver stopping");
@@ -122,7 +123,7 @@ public class SolutionStrategy {
 
             //simply get the blank tile next to the next tile we want to solve
             else{
-                nextHeuristic = new BlankToTarget(indexToSolve, GameState.Direction.UP);
+                nextHeuristic = new BlankToTarget(indexToSolve, GameState.Direction.RIGHT);
                 Log.d(TAG, "Getting blank tile to index " + indexToSolve);
             }
         }
@@ -163,7 +164,7 @@ public class SolutionStrategy {
      * we getByLocation the blank tile adjacent to it-
      * This makes it easier to move the tile.
      */
-    public void processSolvedGoal(){
+    public void processSolvedGoal(GameState gameState){
 
         //The last goal was solving the final 6 tiles, so the game is solved
         if(mSolvingLast6){
@@ -176,7 +177,8 @@ public class SolutionStrategy {
         else{
             lastIndexSolved = indexToSolve;
             freezeIndex(indexToSolve);
-            getNextIndex();
+            
+            //getNextIndex();
             moveBlank = true;
         }
 
@@ -264,7 +266,9 @@ public class SolutionStrategy {
             }
 
         }
-        Log.d(TAG, "Next index called, next index is " + indexToSolve);
+        //Log.d(TAG, "Next index called, next index is " + indexToSolve);
+        
+        
 
     }
 
@@ -281,7 +285,7 @@ public class SolutionStrategy {
 
         boolean result = location.y <= LOWER_BOUND && location.y >= UPPER_BOUND;
 
-        Log.d(TAG, "Last two rows for index " + indexToSolve + ": " + result);
+        //Log.d(TAG, "Last two rows for index " + indexToSolve + ": " + result);
 
         return result;
     }
@@ -308,8 +312,8 @@ public class SolutionStrategy {
         boolean result = location.x <= RIGHT_BOUND && location.x >= LEFT_BOUND
                 && location.y <= LOWER_BOUND && location.y >= UPPER_BOUND;
 
-        Log.d(TAG, String.format("inLastSix for Location is RC(%s, %s). " +
-                "Result is %s.", location.y, location.x, result));
+        /*Log.d(TAG, String.format("inLastSix for Location is RC(%s, %s). " +
+                "Result is %s.", location.y, location.x, result));*/
         return result;
     }
 
@@ -346,7 +350,7 @@ public class SolutionStrategy {
 
         //unfreeze the tile that was temporarily frozen for the line end maneuver
         tempUnfreeze();
-
+        
         return result;
     }
 

@@ -129,9 +129,10 @@ public class Solver {
             if(mHeuristic.checkIfSolved(nextNode)){
 
             	Log.d(TAG, "Solution found!");            	
-	            Log.d(TAG, endState.toString());
-	            Log.d(TAG, nextNode.getMoveQueue().toString());
-	            
+	            if(last6){
+	            	Log.d(TAG, endState.toString());
+	            	Log.d(TAG, nextNode.getMoveQueue().toString());
+	            }
 	            mStatus = Status.SOLVED;
 	            break;
             }
