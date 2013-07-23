@@ -48,6 +48,17 @@ public class MoveQueue implements Queue<GameState.Direction> {
         return true;
     }
     
+    @Override
+    public String toString(){
+    	StringBuffer buffer = new StringBuffer();
+    	for(Direction move : moves){
+    		buffer.append(move);
+    		buffer.append(";");
+    	}
+    	
+    	return buffer.toString();
+    }
+    
     /**In situations where the solver gets stuck, it's helpful to simply
      * try all available moves and see if they lead to a solution.
      * 

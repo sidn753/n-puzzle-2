@@ -1,5 +1,11 @@
 package com.example.n_puzzle.Solver;
 
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.HashSet;
+import java.util.PriorityQueue;
+import java.util.Set;
+
 import android.graphics.Point;
 import android.util.Log;
 
@@ -7,11 +13,6 @@ import com.example.n_puzzle.GamePlayActivity;
 import com.example.n_puzzle.GameState;
 import com.example.n_puzzle.Solver.Heuristics.Heuristic;
 import com.example.n_puzzle.Solver.Heuristics.SolveLast6;
-
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.HashSet;
-import java.util.PriorityQueue;
 
 /**
  * Created by stepheno on 6/24/13.
@@ -21,6 +22,7 @@ public class Solver {
 
     private SolveGameTask mParent;
     private Heuristic mHeuristic;
+    private boolean last6;
     private GameState mBeginState;
     private ArrayList<Point> mFrozenTiles;
     private long mNodesChecked = 0;
@@ -28,7 +30,7 @@ public class Solver {
     private PriorityQueue<Node> mPossibleSuccessors;
 
     /**Store visited states in a hashset to avoid looking at them twice.*/
-    private HashSet<GameState> mVisitedStates;
+    private Set<GameState> mVisitedStates;
 
     /**These tiles are already solved and should not be moved. Dont
      * consider any branches that result from moving these.*/
@@ -41,11 +43,14 @@ public class Solver {
                   ArrayList<Point> frozenTiles){
         mParent = parentThread;
         mHeuristic = goal;
+        last6 = false; //mHeuristic instanceof SolveLast6;
+        
         mBeginState = beginState;
         mFrozenTiles = frozenTiles;
 
         Log.d(TAG, "Starting solver for goal: " + mHeuristic.getDescription());
         Log.d(TAG, "BeginState: \n" + beginState.toString());
+        Log.d(TAG, "csv: " + beginState.toCSV());
         Log.d(TAG, "Frozen Tiles: " + printFrozen());
     }
     
@@ -63,6 +68,12 @@ public class Solver {
         return mStatus;
     }
 
+    public void printVisited(){
+    	for(GameState state : mVisitedStates){
+    		Log.d(TAG, "visited " + state.toCSV());
+    	}
+    }
+    
     public Node solveGoal(){
         mStatus = Status.SOLVING;
 
@@ -117,15 +128,10 @@ public class Solver {
             //Check if this node solves the goal, return it if so
             if(mHeuristic.checkIfSolved(nextNode)){
 
-            	Log.d(TAG, "Solution found!");
-
-	            if(GamePlayActivity.DEBUG_VERBOSE){
-	                Log.d(TAG, endState.toString());
-	                int i = 1;
-	                for(GameState.Direction move : nextNode.getMoveQueue()){
-	                    Log.d(TAG, "Solution Direction " + i++ + " " + move);
-	                }
-	            }
+            	Log.d(TAG, "Solution found!");            	
+	            Log.d(TAG, endState.toString());
+	            Log.d(TAG, nextNode.getMoveQueue().toString());
+	            
 	            mStatus = Status.SOLVED;
 	            break;
             }
@@ -148,8 +154,9 @@ public class Solver {
     	try{
         	mVisitedStates.add(gameState);
         	
-        	if(GamePlayActivity.DEBUG_VERBOSE && mHeuristic instanceof SolveLast6){
+        	if(last6){
         		Log.d(TAG, "adding state to visistedStates: " + gameState.toCSV());
+        		Log.d(TAG, "visited states: " + mVisitedStates.size());
         	}
         }
         catch(OutOfMemoryError e){
@@ -168,15 +175,26 @@ public class Solver {
         
         ArrayList<GameState.Direction> legalMoves = previousState.possibleMoves((mFrozenTiles));
 
+        if(last6){
+        	Log.d(TAG, "adding successors for gamestate: " + previousState.toCSV());
+        }
+        
         /*for each legal move, check out the gamestate that would
         result from making that move. */
         for(GameState.Direction nextMove : legalMoves){
 
+        	if(last6) Log.d(TAG, "trying move: " + nextMove);
+        	
             //makeMove returns the state that results from making that move
             GameState resultantState = previousState.makeMove(nextMove);
 
             //Skip this state if we've already seen it
-            if(mVisitedStates.contains(resultantState)){
+            String csv = resultantState.toCSV();
+			if(hasBeenVisited(resultantState)){
+            	if(last6){
+            		Log.d(TAG, "resultant state has already been seen, skipping: " + csv);
+            		if(csv.equals("0,1,2,3,4,5,6,7,8,-1,10,13,12,11,9,14,")) printVisited();
+            	}
                 continue;
             }
             else{
@@ -192,15 +210,10 @@ public class Solver {
                         nextMoves, resultantState);
                 
                 
-                if(mHeuristic instanceof SolveLast6){
-                	StringBuffer moveString = new StringBuffer();
-                	MoveQueue moveQueue = nextNode.getMoveQueue();
-					for(GameState.Direction move : moveQueue){
-                		moveString.append(move);
-                		moveString.append(';');
-                	}
-                	
-					Log.d(TAG, "Adding successor path: " + moveString.toString());
+                if(last6){
+					Log.d(TAG, "Adding successor path: " + nextNode.getMoveQueue().toString());
+					
+					Log.d(TAG, "New node endState csv: " + csv);
 					
                     /*Log.d(TAG, String.format("Adding a new node to the PriorityQueue. " +
                             "The previous state is \n%s\n" +
@@ -212,6 +225,8 @@ public class Solver {
             }
         }
     }
-    
 
+	private boolean hasBeenVisited(GameState resultantState) {
+		return mVisitedStates.contains(resultantState);
+	}
 }

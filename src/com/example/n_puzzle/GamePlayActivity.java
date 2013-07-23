@@ -37,7 +37,7 @@ public class GamePlayActivity extends Activity implements DifficultyManagerCalle
 	public static boolean DEBUG_VERBOSE = false;
 	
 	/**If this var isn't the empty string, the game will start with the given gamestate */
-	public static final String DEBUG_GAMESTATE_CSV = "13,9,12,11,-1,14,8,7,10,6,4,3,2,5,0,1,";
+	public static final String DEBUG_GAMESTATE_CSV = "";
 
 	/**Run the preview activity only if it hasn't been run before*/
 	public static boolean initialized = false;
@@ -447,6 +447,8 @@ public class GamePlayActivity extends Activity implements DifficultyManagerCalle
     void moveMade(){
         mNumMoves++;
         Log.d("movemade", "" + mNumMoves);
+        mState = mGameGrid.getGameState();
+        Log.d(TAG, mState.toCSV());
         if(mGameGrid.isTouchEnabled()){
             restartSolving();
         }
