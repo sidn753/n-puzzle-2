@@ -13,6 +13,11 @@
         <item>"Medium"</item>
         <item>"Hard"</item>
         </string-array>
+        
+    <string-array name="speeds">
+        <item>"Fast"</item>
+        <item>"Slow"</item>
+    </string-array>
        
        <string name="victory_text">YOU ARE THE WINNER!</string>
        <string name="change_difficulty">Change Difficulty</string>
@@ -22,4 +27,5 @@
        <string name="difficulty_menu_title">Pick a difficulty</string>
        <string name="difficulty_preference_key">last_difficulty</string>
        <string name="n_puzzle_preferences_filename">n_puzzle_preferences</string>
+       <string name="change_speed">Change Solver Speed</string>
 </resources>

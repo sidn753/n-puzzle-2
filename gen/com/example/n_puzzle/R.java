@@ -10,6 +10,7 @@ package com.example.n_puzzle;
 public final class R {
     public static final class array {
         public static final int difficulties=0x7f060000;
+        public static final int speeds=0x7f060001;
     }
     public static final class attr {
     }
@@ -38,13 +39,14 @@ public final class R {
         public static final int back_to_select=0x7f09000a;
         public static final int banner=0x7f090003;
         public static final int change_difficulty=0x7f090008;
+        public static final int change_speed=0x7f09000c;
         public static final int gameview=0x7f090002;
         public static final int image_title=0x7f090007;
         public static final int num_moves=0x7f090001;
         public static final int previewImage=0x7f090004;
         public static final int reshuffle=0x7f090009;
-        public static final int select_change_difficulty=0x7f09000c;
-        public static final int select_gallery=0x7f09000d;
+        public static final int select_change_difficulty=0x7f09000d;
+        public static final int select_gallery=0x7f09000e;
         public static final int solve=0x7f09000b;
         public static final int thumbnail=0x7f090006;
         public static final int txt_countdown=0x7f090005;
@@ -66,6 +68,7 @@ public final class R {
         public static final int app_name=0x7f050000;
         public static final int back_to_select=0x7f050009;
         public static final int change_difficulty=0x7f050007;
+        public static final int change_speed=0x7f05000e;
         public static final int click_me_=0x7f050003;
         public static final int difficulty_menu_title=0x7f05000b;
         public static final int difficulty_preference_key=0x7f05000c;

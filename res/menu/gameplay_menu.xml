@@ -23,5 +23,11 @@
         android:visible="true"
         android:orderInCategory="100"
         ></item>
+    <item android:id="@+id/change_speed"
+        android:title="@string/change_speed"
+        android:showAsAction="ifRoom" 
+        android:visible="true"
+        android:enabled="true"
+        ></item>
 		
 </menu>

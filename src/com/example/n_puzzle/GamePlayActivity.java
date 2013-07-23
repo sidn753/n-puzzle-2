@@ -37,7 +37,7 @@ public class GamePlayActivity extends Activity implements DifficultyManagerCalle
 	public static boolean DEBUG_VERBOSE = false;
 	
 	/**If this var isn't the empty string, the game will start with the given gamestate */
-	public static final String DEBUG_GAMESTATE_CSV = "23,22,21,20,19,17,13,16,15,14,-1,2,12,10,9,18,1,11,6,5,8,3,7,0,4,";
+	public static final String DEBUG_GAMESTATE_CSV = "";
 
 	/**Run the preview activity only if it hasn't been run before*/
 	public static boolean initialized = false;
@@ -283,7 +283,6 @@ public class GamePlayActivity extends Activity implements DifficultyManagerCalle
     /**If the solver fails for some reason, we add a random move and try again. */
     public void solverFailed(){
     	Log.d(TAG, "Solver failed.");
-    	
     	//TODO
     }
 
@@ -373,6 +372,9 @@ public class GamePlayActivity extends Activity implements DifficultyManagerCalle
 			case R.id.solve:
                 startMoveMaker();
 				break;
+			case R.id.change_speed:
+				MoveMaker.changeSpeed(this);
+				break;
 		}
 		return true;
 	}
@@ -383,6 +385,8 @@ public class GamePlayActivity extends Activity implements DifficultyManagerCalle
     /**Have the solver AI solve the game in real time
      */
     private void startMoveMaker() {
+    	if(isMoveMakerRunning) return;
+    	
     	if(started){
 	        mGameGrid.setTouchEnabled(false);
 	        mMoveMaker = new MoveMaker(this, mMoveQueue);
@@ -420,9 +424,9 @@ public class GamePlayActivity extends Activity implements DifficultyManagerCalle
 
     void moveMade(){
         mNumMoves++;
-        Log.d("movemade", "" + mNumMoves);
+        if(DEBUG_VERBOSE) Log.d("movemade", "" + mNumMoves);
         mState = mGameGrid.getGameState();
-        Log.d(TAG, mState.toCSV());
+        if(DEBUG_VERBOSE) Log.d(TAG, mState.toCSV());
         if(mGameGrid.isTouchEnabled()){
             restartSolving();
         }
@@ -462,6 +466,14 @@ public class GamePlayActivity extends Activity implements DifficultyManagerCalle
         restartIntent.setData(getIntent().getData());
         startActivity(restartIntent);
 	}
+	
+	public void speedChanged(){
+		
+		if(isMoveMakerRunning){
+			mMoveMaker.stop();
+			startMoveMaker();
+		}
+	}
 
 
 /////////////////////////////////////////////////////////////////////////
@@ -483,6 +495,11 @@ public class GamePlayActivity extends Activity implements DifficultyManagerCalle
             mSolveTask.cancel(true);
             mSolveTask = null;
         }
+        
+        if(mMoveMaker != null){
+        	stopMoveMaker();
+        }
+        
         if(mGameGrid != null) mGameGrid.freeMemory();
         mGameGrid = null;
         mPreviewImage = null;
