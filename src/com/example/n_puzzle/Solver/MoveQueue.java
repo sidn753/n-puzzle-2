@@ -47,8 +47,49 @@ public class MoveQueue implements Queue<GameState.Direction> {
         moves.addAll(castedOther.moves);
         return true;
     }
+    
+    /**In situations where the solver gets stuck, it's helpful to simply
+     * try all available moves and see if they lead to a solution.
+     * 
+     * @param beginState the gamestate that the game began with after the first shuffle
+     * @return the gamestate after making the next available move
+     */
+	public synchronized GameState addNextAvailableMove(GameState beginState, ArrayList<Point> frozenTiles, int tryCount){
+		GameState endState = this.getStateAfterMoves(beginState);
+		
+		Log.d(TAG, "try " + tryCount + " for: \n" + endState.toString());
+		
+    	ArrayList<GameState.Direction> possibleMoves= endState.possibleMoves(frozenTiles);
+    	
+    	int size = possibleMoves.size();
+    	if(size == 0){
+    		Log.d(TAG, "Adding next available move but somehow there are no legal moves left");
+    		Log.d(TAG, "BeginState" + beginState.toCSV());
+    		Log.d(TAG, "EndState:" + endState.toCSV());
+    		return null;
+    	}
+    	
+    	if(tryCount >= size){
+    		Log.d(TAG, "Tried all moves");
+    		return null;
+    	}
+    	else{
+    		Direction move =  possibleMoves.get(tryCount);
+    		Log.d(TAG, "Choosing move: " + move);
+    		this.add(move);
+    		return endState.makeMove(move);
+    	}
+    }
 
-    public GameState addRandomMove(GameState beginState, ArrayList<Point> frozenTiles){
+    
+    /**In situations where the solver gets stuck, it's helpful to make a
+     * random move and try solving again
+     * 
+     * @param beginState the gamestate that the game began with after the first shuffle
+     * @param frozenTiles any tiles that have already been solved and should not be moved
+     * @return the gamestate that results from making a random move
+     */
+    public synchronized GameState addRandomMove(GameState beginState, ArrayList<Point> frozenTiles){
     	
     	GameState endState = this.getStateAfterMoves(beginState);
     	ArrayList<GameState.Direction> possibleMoves= endState.possibleMoves(frozenTiles);
@@ -67,7 +108,10 @@ public class MoveQueue implements Queue<GameState.Direction> {
     	this.add(move);
     	
     	return endState.makeMove(move);
-    	
+    }
+    
+    public synchronized void removeLastMove(){
+    	moves.remove(moves.size() - 1);
     }
     
     @Override
@@ -75,7 +119,7 @@ public class MoveQueue implements Queue<GameState.Direction> {
         moves.removeAll(moves);
     }
 
-    public GameState getStateAfterMoves(GameState beginState){
+    public synchronized GameState getStateAfterMoves(GameState beginState){
         GameState endState = beginState;
 
         for(GameState.Direction move : moves){

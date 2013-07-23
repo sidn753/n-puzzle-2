@@ -34,10 +34,10 @@ public class GamePlayActivity extends Activity implements DifficultyManagerCalle
 	public static final String TAG = GamePlayActivity.class.getSimpleName();
 	
 	/**Application-wide flag for more intense logging.*/
-	public static final boolean DEBUG_VERBOSE = false;
+	public static boolean DEBUG_VERBOSE = false;
 	
 	/**If this var isn't the empty string, the game will start with the given gamestate */
-	public static final String DEBUG_GAMESTATE_CSV = "0,7,4,-1,6,5,1,2,3,";
+	public static final String DEBUG_GAMESTATE_CSV = "13,9,12,11,-1,14,8,7,10,6,4,3,2,5,0,1,";
 
 	/**Run the preview activity only if it hasn't been run before*/
 	public static boolean initialized = false;
@@ -270,21 +270,47 @@ public class GamePlayActivity extends Activity implements DifficultyManagerCalle
         mSolveTask.execute();
     }
     
+    static int tryCount = 0;
+    
     /**If the solver fails for some reason, we add a random move and try again. */
     public void solverFailed(){
-    	Log.d(TAG, "Solver failed. Adding random move and trying again");
+    	Log.d(TAG, "Solver failed.");
+    	
+    	/*//remove the last move so we can try a new alternative
+    	if(tryCount > 0){
+    		mMoveQueue.removeLastMove();
+    	}*/
     	
     	ArrayList<Point> frozenTiles = mSolutionStrategy.getFrozenTiles();
     	
     	mState = mGameGrid.getGameState();
     	
-    	GameState stateAfterRandomMove = mMoveQueue.addRandomMove(mState, frozenTiles);
+    	/*//try each move in succession
+		GameState stateAfterNextAvailableMove = mMoveQueue.addNextAvailableMove(mState, frozenTiles, tryCount);
+				
+		if(stateAfterNextAvailableMove != null){
+			Log.d(TAG, "Trying next available move: " + tryCount);
+			tryCount++;
+			solveNextTask(stateAfterNextAvailableMove);
+		}*/
+		
+		//if we've tried all possible moves, make a random move and keep going
+		//else
+		{
+			/*tryCount = 0;
+			GameState stateAfterRandomMove = mMoveQueue.addRandomMove(mState, frozenTiles);
+			
+			If there are no legal moves left given the frozen tiles, we're stuck. 
+			if(stateAfterRandomMove == null){
+				stopMoveMaker();
+			}
+			else{
+				Log.d(TAG, "Random move made, solving for gamestate: \n" + stateAfterRandomMove.toString());
+				solveNextTask(stateAfterRandomMove);
+			}*/
+		}
     	
-    	//happens if there are no legal moves left given the frozen tiles
-    	if(stateAfterRandomMove == null){
-    		stopMoveMaker();
-    	}
-    	//solveNextTask(stateAfterRandomMove);
+    	
     }
 
     /**SolveGameTask calls this method in onPostExecute.
@@ -428,7 +454,8 @@ public class GamePlayActivity extends Activity implements DifficultyManagerCalle
 
     public void moveMakerFinished(){
     	Log.d(TAG, "MoveMaker finished");
-        if(mGameGrid.isSolved()){
+    	
+        if(mGameGrid != null && mGameGrid.isSolved()){
             winGame();
         }
         else{

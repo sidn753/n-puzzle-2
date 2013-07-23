@@ -46,6 +46,17 @@ public class Solver {
 
         Log.d(TAG, "Starting solver for goal: " + mHeuristic.getDescription());
         Log.d(TAG, "BeginState: \n" + beginState.toString());
+        Log.d(TAG, "Frozen Tiles: " + printFrozen());
+    }
+    
+    public String printFrozen(){
+    	StringBuffer buffer = new StringBuffer();
+    	for(Point p : mFrozenTiles){
+    		buffer.append(p.toString());
+    		buffer.append(";");
+    	}
+    	
+    	return buffer.toString();
     }
 
     public Status getStatus(){
@@ -106,17 +117,17 @@ public class Solver {
             //Check if this node solves the goal, return it if so
             if(mHeuristic.checkIfSolved(nextNode)){
 
-              Log.d(TAG, "Solution found!");
+            	Log.d(TAG, "Solution found!");
 
-                if(GamePlayActivity.DEBUG_VERBOSE){
-                    Log.d(TAG, endState.toString());
-                    int i = 1;
-                    for(GameState.Direction move : nextNode.getMoveQueue()){
-                        Log.d(TAG, "Solution Direction " + i++ + " " + move);
-                    }
-                }
-                mStatus = Status.SOLVED;
-                break;
+	            if(GamePlayActivity.DEBUG_VERBOSE){
+	                Log.d(TAG, endState.toString());
+	                int i = 1;
+	                for(GameState.Direction move : nextNode.getMoveQueue()){
+	                    Log.d(TAG, "Solution Direction " + i++ + " " + move);
+	                }
+	            }
+	            mStatus = Status.SOLVED;
+	            break;
             }
             else{
             	//returns false if an out of memory error occurs
@@ -137,7 +148,7 @@ public class Solver {
     	try{
         	mVisitedStates.add(gameState);
         	
-        	if(mHeuristic instanceof SolveLast6){
+        	if(GamePlayActivity.DEBUG_VERBOSE && mHeuristic instanceof SolveLast6){
         		Log.d(TAG, "adding state to visistedStates: " + gameState.toCSV());
         	}
         }
@@ -154,7 +165,7 @@ public class Solver {
         final GameState previousState = node.getEndState();
         final GameState ancestorState = node.getBeginningState();
         final MoveQueue previousMoves = node.getMoveQueue();
-
+        
         ArrayList<GameState.Direction> legalMoves = previousState.possibleMoves((mFrozenTiles));
 
         /*for each legal move, check out the gamestate that would
@@ -169,14 +180,7 @@ public class Solver {
                 continue;
             }
             else{
-
-                if(mHeuristic instanceof SolveLast6){
-                    Log.d(TAG, String.format("Adding a new node to the PriorityQueue. " +
-                            "The previous state is \n%s\n" +
-                            "The Direction is %s, and the resultant state is \n%s\n ",
-                            previousState.toString(), nextMove, resultantState.toString()));
-                }
-
+                
                 /*Clone the previous state's moveQueue and push the prospective move onto it.*/
                 MoveQueue nextMoves = new MoveQueue();
                 nextMoves.addAll(previousMoves);
@@ -184,10 +188,30 @@ public class Solver {
 
                 /*Preserve the ancestor of the previous state, add the moves to getByLocation here,
                 * and add the resultant state. Push this new node to the priorityqueue.*/
-                mPossibleSuccessors.add(new Node(ancestorState,
-                        nextMoves, resultantState));
+                Node nextNode = new Node(ancestorState,
+                        nextMoves, resultantState);
+                
+                
+                if(mHeuristic instanceof SolveLast6){
+                	StringBuffer moveString = new StringBuffer();
+                	MoveQueue moveQueue = nextNode.getMoveQueue();
+					for(GameState.Direction move : moveQueue){
+                		moveString.append(move);
+                		moveString.append(';');
+                	}
+                	
+					Log.d(TAG, "Adding successor path: " + moveString.toString());
+					
+                    /*Log.d(TAG, String.format("Adding a new node to the PriorityQueue. " +
+                            "The previous state is \n%s\n" +
+                            "The Direction is %s, and the resultant state is \n%s\n ",
+                            previousState.toString(), nextMove, resultantState.toString()));*/
+                }
+
+                mPossibleSuccessors.add(nextNode);
             }
         }
     }
+    
 
 }

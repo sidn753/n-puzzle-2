@@ -47,27 +47,30 @@ public class SolutionStrategy {
         COL_LENGTH = ROW_LENGTH;
         mFrozenTiles = new ArrayList<Point>();
 
-        indexToSolve = getFirstUnsolvedIndex(gameState);
+        getFirstUnsolvedIndex(gameState);
 
     }
 
-    //TODO make this use getNextIndex
-    public int getFirstUnsolvedIndex(GameState gameState){
-        int index = 0;
+    /**Don't try to solve tiles that are already in place*/
+    public void getFirstUnsolvedIndex(GameState gameState){
 
-        for(int i = 0; i < gameState.getNumTiles(); i++){
-            Point correct = GameState.getCorrectLocationForIndex(i, ROW_LENGTH);
-            Point actual = gameState.getLocation(i);
+        while(indexToSolve < gameState.getNumTiles() - 1){
+            Point correct = GameState.getCorrectLocationForIndex(indexToSolve, ROW_LENGTH);
+            Point actual = gameState.getLocation(indexToSolve);
             if(!correct.equals(actual)){
+            	Log.d(TAG, String.format("Point actual: %s, Point correct: %s", actual, correct));
+            	Log.d(TAG, "index " + indexToSolve + " is not in the correct place, stopping freezes");
                 break;
             }
 
             //freeze the index so that it doesn't get moved
-            Log.d(TAG, index + " is already solved, freezing");
-            freezeIndex(index);
-            index++;
+            if(!inLastSix(indexToSolve)){
+	            Log.d(TAG, indexToSolve + " is already solved, freezing");
+	            freezeIndex(indexToSolve);
+	            
+            }
+            getNextIndex();
         }
-        return index;
     }
 
 

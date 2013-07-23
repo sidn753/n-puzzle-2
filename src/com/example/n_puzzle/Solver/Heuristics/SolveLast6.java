@@ -29,11 +29,12 @@ public class SolveLast6 extends Heuristic{
         int distance1 = getSumOfManhattanDistances(gameState1);
         int distance2 = getSumOfManhattanDistances(gameState2);
 
+        //Use the length of the movequeue as a secondary heuristic- shorter path length is better
         int total1 = distance1 + moveQueue1.size();
         int total2 = distance2 + moveQueue2.size();
 
         //if distance 2 is greater, then gamestate 1 is better
-        int result = distance1 - distance2;
+        int result = total1 - total2;
 
         return result;
 
