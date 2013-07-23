@@ -487,6 +487,7 @@ public class GamePlayActivity extends Activity implements DifficultyManagerCalle
 
         mGameGrid.setTouchEnabled(false);
         mGameGrid.setSolved(true);
+        mGameGrid.showBlankTile();
 	}
 
     /**Free the memory used by the GameGrid*/

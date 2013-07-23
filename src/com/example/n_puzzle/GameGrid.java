@@ -2,6 +2,7 @@ package com.example.n_puzzle;
 
 import java.util.ArrayList;
 
+import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Point;
@@ -30,10 +31,10 @@ public class GameGrid extends RelativeLayout implements OnClickListener, View.On
     private ImageSegmentView[][] mSegmentGrid;
 	private Point blankTile;
 
-    /**If the user has clicked the solveGoal button, we have to change the onclick listener*/
+    /**If the user has clicked the solve it for me option, we have to change the onclicklistener*/
     private boolean touchEnabled = true;
+    
     private boolean solved = false;
-
 
 	/**The GamePlayActivity containing this Game Grid*/
 	private GamePlayActivity mContext;
@@ -60,12 +61,11 @@ public class GameGrid extends RelativeLayout implements OnClickListener, View.On
 		//build the imageviews that we'll move around
 		buildSegments(context);
 		
-		//Place the tiles in reverse order to ensure solvability
         if(state == null){
 		    putDefaultPlacement();
         }
 
-        //place views according to the passed correctPlaces parameter
+        //place views according to the passed gamestate
         else{
             putSegmentsInPlace(state);
         }
@@ -106,6 +106,21 @@ public class GameGrid extends RelativeLayout implements OnClickListener, View.On
 		blankTile = new Point(mDivisions - 1, mDivisions - 1);
 	}
 	
+	public void showBlankTile(){
+		ImageSegmentBuilder builder = new ImageSegmentBuilder();
+		Bitmap missingPiece = builder.buildImageSegment(mDivisions-1, mDivisions-1);
+		ImageSegmentView blankView = new ImageSegmentView(mContext, mDivisions-1, mDivisions-1, mDivisions * mDivisions -1);
+		blankView.setImageBitmap(missingPiece);
+
+		ObjectAnimator.ofFloat(blankView, "alpha", 0).setDuration(0).start();
+		LayoutParams params = getPlacementParams(mDivisions-1, mDivisions-1);
+		this.addView(blankView, params);
+		
+		final int DURATION = 1000;
+		
+		ObjectAnimator.ofFloat(blankView, "alpha", 1).setDuration(DURATION).start();
+		
+	}
 	
 	/**Get the pixel parameters (x, y, w, h) where the given segment should be placed.
 	 * 
@@ -128,7 +143,6 @@ public class GameGrid extends RelativeLayout implements OnClickListener, View.On
      */
     public void putDefaultPlacement(){
         putSegmentsInPlace(GameState.buildDefaultShuffle(mDivisions));
-
     }
 
     /**Place the tiles in the places indicated in the 2d array passed in
