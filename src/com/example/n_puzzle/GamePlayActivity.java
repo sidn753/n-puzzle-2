@@ -1,6 +1,5 @@
 package com.example.n_puzzle;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.res.Configuration;
@@ -10,13 +9,17 @@ import android.graphics.Point;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.CountDownTimer;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.util.Log;
+
+import com.actionbarsherlock.app.SherlockActivity;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuItem;
+import com.actionbarsherlock.view.MenuInflater;
+
 import com.example.n_puzzle.DifficultyManager.DifficultyManagerCaller;
 import com.example.n_puzzle.Solver.Heuristics.Heuristic;
 import com.example.n_puzzle.Solver.Node;
@@ -30,7 +33,7 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.zip.Checksum;
 
-public class GamePlayActivity extends Activity implements DifficultyManagerCaller{
+public class GamePlayActivity extends SherlockActivity implements DifficultyManagerCaller {
 	public static final String TAG = GamePlayActivity.class.getSimpleName();
 	
 	/**Application-wide flag for more intense logging.*/
@@ -83,7 +86,7 @@ public class GamePlayActivity extends Activity implements DifficultyManagerCalle
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.gameplay_menu, menu);
+        getSupportMenuInflater().inflate(R.menu.gameplay_menu, (Menu) menu);
         return true;
     }
 

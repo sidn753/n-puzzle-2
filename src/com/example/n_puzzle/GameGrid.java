@@ -17,8 +17,7 @@ import android.widget.RelativeLayout;
  * 
  * @author StephenO
  */
-public class GameGrid extends RelativeLayout implements OnClickListener, View.OnLongClickListener,
-        View.OnDragListener {
+public class GameGrid extends RelativeLayout implements OnClickListener, View.OnLongClickListener {
 
 	public static final String TAG = GameGrid.class.getSimpleName();	
 	
@@ -112,13 +111,13 @@ public class GameGrid extends RelativeLayout implements OnClickListener, View.On
 		ImageSegmentView blankView = new ImageSegmentView(mContext, mDivisions-1, mDivisions-1, mDivisions * mDivisions -1);
 		blankView.setImageBitmap(missingPiece);
 
-		ObjectAnimator.ofFloat(blankView, "alpha", 0).setDuration(0).start();
+		//ObjectAnimator.ofFloat(blankView, "alpha", 0).setDuration(0).start();
 		LayoutParams params = getPlacementParams(mDivisions-1, mDivisions-1);
 		this.addView(blankView, params);
 		
 		final int DURATION = 1000;
 		
-		ObjectAnimator.ofFloat(blankView, "alpha", 1).setDuration(DURATION).start();
+		//ObjectAnimator.ofFloat(blankView, "alpha", 1).setDuration(DURATION).start();
 		
 	}
 	
@@ -277,20 +276,6 @@ public class GameGrid extends RelativeLayout implements OnClickListener, View.On
         return true;
     }
 
-
-    private View mDraggedView;
-    @Override
-    public boolean onDrag(View touchedView, DragEvent dragEvent) {
-        if(dragEvent.getAction() == DragEvent.ACTION_DRAG_STARTED){
-            Log.d(TAG, "drag started");
-            mDraggedView = touchedView;
-        }
-        else if(dragEvent.getAction() == DragEvent.ACTION_DRAG_ENDED){
-            Log.d(TAG, "drag ended");
-            touched((ImageSegmentView) mDraggedView);
-        }
-        return true;
-    }
 
     private void touched(ImageSegmentView touchedView) {
         //If the game is in solveMode, stop solvemode
