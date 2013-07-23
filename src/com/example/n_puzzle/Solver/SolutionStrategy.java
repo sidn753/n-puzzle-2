@@ -65,7 +65,7 @@ public class SolutionStrategy {
 
             //freeze the index so that it doesn't get moved
             if(!inLastSix(indexToSolve)){
-	            Log.d(TAG, indexToSolve + " is already solved, freezing");
+	            //Log.d(TAG, indexToSolve + " is already solved, freezing");
 	            freezeIndex(indexToSolve);
             }
             getNextIndex();
@@ -176,7 +176,7 @@ public class SolutionStrategy {
         }
         else{
             lastIndexSolved = indexToSolve;
-            freezeIndex(indexToSolve);
+            //freezeIndex(indexToSolve);
             
             //getNextIndex();
             moveBlank = true;
@@ -199,7 +199,7 @@ public class SolutionStrategy {
 
         if(pointToFreeze == null) return;
 
-        Log.d(TAG, "Freezing point (R, C) " + pointToFreeze.y + ", " +pointToFreeze.x);
+        //Log.d(TAG, "Freezing point (R, C) " + pointToFreeze.y + ", " +pointToFreeze.x);
 
         if(!mFrozenTiles.contains(pointToFreeze))
             mFrozenTiles.add(pointToFreeze);

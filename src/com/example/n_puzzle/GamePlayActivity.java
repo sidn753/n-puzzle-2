@@ -37,7 +37,7 @@ public class GamePlayActivity extends Activity implements DifficultyManagerCalle
 	public static boolean DEBUG_VERBOSE = false;
 	
 	/**If this var isn't the empty string, the game will start with the given gamestate */
-	public static final String DEBUG_GAMESTATE_CSV = "";
+	public static final String DEBUG_GAMESTATE_CSV = "23,22,21,20,19,17,13,16,15,14,-1,2,12,10,9,18,1,11,6,5,8,3,7,0,4,";
 
 	/**Run the preview activity only if it hasn't been run before*/
 	public static boolean initialized = false;

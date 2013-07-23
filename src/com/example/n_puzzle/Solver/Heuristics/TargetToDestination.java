@@ -3,6 +3,7 @@ package com.example.n_puzzle.Solver.Heuristics;
 import android.graphics.Point;
 
 import com.example.n_puzzle.GameState;
+import com.example.n_puzzle.Solver.MoveQueue;
 import com.example.n_puzzle.Solver.Node;
 
 /**
@@ -47,12 +48,21 @@ public class TargetToDestination extends Heuristic {
 
         Point targetLoc1 = gameState1.getLocation(mTargetIndex);
         Point targetLoc2 = gameState2.getLocation(mTargetIndex);
+        
+        MoveQueue moveQueue1 = futureState1.getMoveQueue();
+        MoveQueue moveQueue2 = futureState2.getMoveQueue();
 
         int distance1 = getDistance(targetLoc1, mDestination);
         int distance2 = getDistance(targetLoc2, mDestination);
+        
+        final int DISTANCE_WEIGHT = 5;
+        
+        //Use the length of the movequeue as a secondary heuristic- shorter path length is better
+        int total1 = distance1 * DISTANCE_WEIGHT + moveQueue1.size();
+        int total2 = distance2 * DISTANCE_WEIGHT + moveQueue2.size();
 
         //if distance 2 is greater, then gamestate 1 is better
-        int result = distance1 - distance2;
+        int result = total1 - total2;
         return result;
     }
 
