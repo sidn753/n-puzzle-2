@@ -96,7 +96,7 @@ public class ImageSelectionActivity extends ListActivity implements DifficultyMa
 			String imgName = f.getName();
 			
 			//skip the ic_launcher and border graphic
-			if(!imgName.startsWith("ic") && !imgName.equals("border")){				
+			if(imgName.startsWith("use_")){				
                 imageNamesList.add(reformatImageName(imgName));
 			}
 		}
@@ -120,7 +120,7 @@ public class ImageSelectionActivity extends ListActivity implements DifficultyMa
 	 * @return a reformatted title for the image
 	 */
 	private String reformatImageName(String input) {
-		String output = input.replace("_", " ");
+		String output = input.replace("use_", "").replace("_", " ");
 		output = output.substring(0, 1).toUpperCase(Locale.getDefault())
 				+ output.substring(1);
 		return output;
@@ -135,6 +135,7 @@ public class ImageSelectionActivity extends ListActivity implements DifficultyMa
 	 */
 	private String deformatImageName(String input){
 		String output = input.replace(" ", "_");
+		output = "use_" + output;
 		output = output.toLowerCase(Locale.getDefault());
 		return output;
 	}

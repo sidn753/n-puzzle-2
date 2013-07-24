@@ -11,7 +11,7 @@
     <application
         android:debuggable="true"
         android:allowBackup="true"
-        android:icon="@drawable/fifteen_puzzle"
+        android:icon="@drawable/use_fifteen_puzzle"
         android:label="@string/app_name"
         android:theme="@android:style/Theme.Holo" >
         <activity
