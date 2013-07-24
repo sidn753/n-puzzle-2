@@ -12,7 +12,7 @@
         android:enabled="true"
         android:showAsAction="always"></item>
     <item android:id="@+id/back_to_select"
-        android:title="@string/back_to_select" 
+        android:title="@string/show_hint" 
         android:visible="true" 
         android:enabled="true"
         android:showAsAction="ifRoom"

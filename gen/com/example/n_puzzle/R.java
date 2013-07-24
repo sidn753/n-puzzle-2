@@ -1071,7 +1071,6 @@ containing a value of this type.
         public static final int abs__shareactionprovider_share_with_application=0x7f090007;
         public static final int action_settings=0x7f09000e;
         public static final int app_name=0x7f09000d;
-        public static final int back_to_select=0x7f090016;
         public static final int change_difficulty=0x7f090014;
         public static final int change_speed=0x7f09001b;
         public static final int click_me_=0x7f090010;
@@ -1081,6 +1080,7 @@ containing a value of this type.
         public static final int here_is_your_answer=0x7f090011;
         public static final int n_puzzle_preferences_filename=0x7f09001a;
         public static final int reshuffle=0x7f090015;
+        public static final int show_hint=0x7f090016;
         public static final int solve_for_me=0x7f090017;
         public static final int title_activity_game_screen=0x7f090012;
         public static final int victory_text=0x7f090013;

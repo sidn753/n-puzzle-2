@@ -1,5 +1,9 @@
 package com.example.n_puzzle;
 
+import java.io.FileNotFoundException;
+import java.io.InputStream;
+import java.util.ArrayList;
+
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.res.Configuration;
@@ -9,32 +13,27 @@ import android.graphics.Point;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.util.Log;
+import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.util.Log;
 
 import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
-import com.actionbarsherlock.view.MenuInflater;
-
 import com.example.n_puzzle.DifficultyManager.DifficultyManagerCaller;
 import com.example.n_puzzle.GameState.GameState;
 import com.example.n_puzzle.GameState.ShuffleTask;
 import com.example.n_puzzle.Image_Manipulation.GameGrid;
-import com.example.n_puzzle.Solver.Heuristics.Heuristic;
-import com.example.n_puzzle.Solver.Node;
 import com.example.n_puzzle.Solver.MoveMaker;
 import com.example.n_puzzle.Solver.MoveQueue;
+import com.example.n_puzzle.Solver.Node;
 import com.example.n_puzzle.Solver.SolutionStrategy;
 import com.example.n_puzzle.Solver.SolveGameTask;
-
-import java.io.FileNotFoundException;
-import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.zip.Checksum;
+import com.example.n_puzzle.Solver.Heuristics.Heuristic;
 
 public class GamePlayActivity extends SherlockActivity implements DifficultyManagerCaller {
 	public static final String TAG = GamePlayActivity.class.getSimpleName();
@@ -53,7 +52,7 @@ public class GamePlayActivity extends SherlockActivity implements DifficultyMana
 	private GameGrid mGameGrid;
 	private DifficultyManager.Difficulty mDifficulty;
 	private TextView txt_countdown;
-	private ImageView mPreviewImage;
+	private ImageView mPreviewImageView;
     private Bitmap mBitmap;
 
     /**Solving members*/
@@ -100,17 +99,38 @@ public class GamePlayActivity extends SherlockActivity implements DifficultyMana
 	 * finishes, the image is split into segments and shuffled, and the gameplay begins.
 	 */
 	private void startPreview(){
-		setContentView(R.layout.activity_preview);
-		init();
+		showImageHint();
         startCountDown();
 	}
 	
-	private void reshowPreview(){
+	/**Show the undivided unshuffled image*/
+	private void showImageHint(){
 		setContentView(R.layout.activity_preview);
+		mPreviewImageView = (ImageView) findViewById(R.id.previewImage);
+		if(mBitmap == null){
+			if(!initializeBitmap()){
+				return;
+			}
+		}
+		
+		//Set the image
+		mPreviewImageView.setImageBitmap(mBitmap);
+		
+		if(started){
+			final GamePlayActivity parent = this;
+			mPreviewImageView.setOnClickListener(new OnClickListener(){
+				@Override
+				public void onClick(View view) {
+					//TODO
+					Log.d(TAG, "preview image clicked");
+					parent.showGame();
+				}
+			});
+		}
 	}
 
-	private void init() {
-        mPreviewImage = (ImageView) findViewById(R.id.previewImage);
+	/**Set the bitmap*/
+	private boolean initializeBitmap() {
         try{
             //decode the image from the uri in the opening intent
             Intent i = getIntent();
@@ -119,6 +139,7 @@ public class GamePlayActivity extends SherlockActivity implements DifficultyMana
             if(data == null){
                 imageNotFoundToast();
                 backToSelect();
+                return false;
             }
             else{
                 //fetch and decode the image data
@@ -128,25 +149,26 @@ public class GamePlayActivity extends SherlockActivity implements DifficultyMana
                 if(mBitmap == null){
                 	imageNotFoundToast();
                 	backToSelect();
-                }
-                else{
-                	//Set the image
-                	mPreviewImage.setImageBitmap(mBitmap);
+                	return false;
                 }
             }
+            
         }
         catch(FileNotFoundException f){
             imageNotFoundToast();
             backToSelect();
+            return false;
         }
 
         //on out of memory error, alert user and go back to the image selection screen
         catch(OutOfMemoryError e){
         	Toast.makeText(this, "Ran out of memory!", Toast.LENGTH_LONG).show();
 			backToSelect();	
+			return false;
         }
 
         mNumMoves = 0;
+        return true;
 	}
 
 	private void imageNotFoundToast() {
@@ -170,7 +192,7 @@ public class GamePlayActivity extends SherlockActivity implements DifficultyMana
         	
 			@Override
 			public void onFinish() {
-				mPreviewImage = null;
+				mPreviewImageView = null;
 				System.gc();
 				initialized = true; 	//countdown has run, don't run countdown again on startup
                 startGame();
@@ -202,8 +224,7 @@ public class GamePlayActivity extends SherlockActivity implements DifficultyMana
 //Start game
 /////////////////////////////////////////////////////////////////////////
 	private void startGame(){
-		setContentView(R.layout.activity_gameplay);
-		mLayout = (LinearLayout)findViewById(R.id.gameview);
+		showGame();
 		
 		if(!DEBUG_GAMESTATE_CSV.equals("")){
 			mState = GameState.fromCSV(DEBUG_GAMESTATE_CSV);
@@ -218,6 +239,16 @@ public class GamePlayActivity extends SherlockActivity implements DifficultyMana
 		if(mGameGrid.isSolved()) winGame();
 		
 		started = true;
+	}
+
+	private void showGame() {
+		setContentView(R.layout.activity_gameplay);
+		mLayout = (LinearLayout)findViewById(R.id.gameview);
+		
+		if(started){
+			mLayout.addView(mGameGrid);
+			if(mGameGrid.isSolved()) winGame();
+		}
 	}
 
 	/**Create a game grid for this gameplay session.
@@ -374,7 +405,9 @@ public class GamePlayActivity extends SherlockActivity implements DifficultyMana
                 startActivity(restartIntent);
 				break;
 			case R.id.back_to_select:
-				backToSelect();
+				stopMoveMaker();
+				mLayout.removeAllViews();
+				showImageHint();
 				break;
 			case R.id.change_difficulty:
 				changeDifficulty();
@@ -474,6 +507,7 @@ public class GamePlayActivity extends SherlockActivity implements DifficultyMana
 	 * The game will retrieve the new difficulty from sharedPreferences when it starts.*/
 	public void handleDifficultySelection(String newDifficulty) {
 		DifficultyManager.makeDifficultyChangedToast(this, newDifficulty).show();
+		this.finish();
         Intent restartIntent = new Intent(this, GamePlayActivity.class);
         restartIntent.setData(getIntent().getData());
         startActivity(restartIntent);
@@ -515,7 +549,7 @@ public class GamePlayActivity extends SherlockActivity implements DifficultyMana
         
         if(mGameGrid != null) mGameGrid.freeMemory();
         mGameGrid = null;
-        mPreviewImage = null;
+        mPreviewImageView = null;
         if(mCountdown != null){
         	mCountdown.cancel();
         	mCountdown = null;

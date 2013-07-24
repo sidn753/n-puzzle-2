@@ -364,7 +364,6 @@ int string abs__shareactionprovider_share_with 0x7f090006
 int string abs__shareactionprovider_share_with_application 0x7f090007
 int string action_settings 0x7f09000e
 int string app_name 0x7f09000d
-int string back_to_select 0x7f090016
 int string change_difficulty 0x7f090014
 int string change_speed 0x7f09001b
 int string click_me_ 0x7f090010
@@ -374,6 +373,7 @@ int string hello_world 0x7f09000f
 int string here_is_your_answer 0x7f090011
 int string n_puzzle_preferences_filename 0x7f09001a
 int string reshuffle 0x7f090015
+int string show_hint 0x7f090016
 int string solve_for_me 0x7f090017
 int string title_activity_game_screen 0x7f090012
 int string victory_text 0x7f090013

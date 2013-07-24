@@ -22,7 +22,7 @@
        <string name="victory_text">YOU ARE THE WINNER!</string>
        <string name="change_difficulty">Change Difficulty</string>
        <string name="reshuffle">Reshuffle</string>
-       <string name="back_to_select">Back to Select</string>
+       <string name="show_hint">Show Hint</string>
        <string name="solve_for_me">Solve it for me!</string>
        <string name="difficulty_menu_title">Pick a difficulty</string>
        <string name="difficulty_preference_key">last_difficulty</string>
