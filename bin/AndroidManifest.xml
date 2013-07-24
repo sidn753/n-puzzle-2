@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.n_puzzle"
+    package="com.steveinflow.n_puzzle"
     android:versionCode="1"
     android:versionName="1.0" >
 
@@ -14,7 +14,7 @@
         android:label="@string/app_name"
         android:theme="@style/Theme.Sherlock" >
         <activity
-            android:name="com.example.n_puzzle.ImageSelectionActivity"
+            android:name="com.steveinflow.n_puzzle.ImageSelectionActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -23,17 +23,17 @@
         </activity>
         
         <activity
-        	android:name = "com.example.n_puzzle.GameState.PreviewActivity"
+        	android:name = "com.steveinflow.n_puzzle.GameState.PreviewActivity"
         	android:label="@string/app_name">
         </activity>
         <activity
-            android:name="com.example.n_puzzle.GamePlayActivity"
+            android:name="com.steveinflow.n_puzzle.GamePlayActivity"
             android:label="@string/title_activity_game_screen" 
             android:configChanges="orientation|screenSize">
         </activity>
 
         <activity
-                android:name="com.example.n_puzzle.PictureReceiver" android:enabled="true">
+                android:name="com.steveinflow.n_puzzle.PictureReceiver" android:enabled="true">
             <intent-filter>
                 <action android:name="android.intent.action.SEND"/>
                 <category android:name="android.intent.category.DEFAULT" />
