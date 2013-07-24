@@ -11,7 +11,7 @@
         android:visible="true" 
         android:enabled="true"
         android:showAsAction="always"></item>
-    <item android:id="@+id/back_to_select"
+    <item android:id="@+id/hint"
         android:title="@string/show_hint" 
         android:visible="true" 
         android:enabled="true"

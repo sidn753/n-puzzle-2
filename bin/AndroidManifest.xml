@@ -9,7 +9,6 @@
         android:targetSdkVersion="17" />
 
     <application
-        android:debuggable="true"
         android:allowBackup="true"
         android:icon="@drawable/use_fifteen_puzzle"
         android:label="@string/app_name"

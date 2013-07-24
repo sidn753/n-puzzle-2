@@ -965,13 +965,13 @@ containing a value of this type.
         public static final int abs__textButton=0x7f040013;
         public static final int abs__title=0x7f04001b;
         public static final int abs__up=0x7f04000b;
-        public static final int back_to_select=0x7f04003c;
         public static final int banner=0x7f040035;
         public static final int change_difficulty=0x7f04003a;
         public static final int change_speed=0x7f04003e;
         public static final int disableHome=0x7f040009;
         public static final int edit_query=0x7f040026;
         public static final int gameview=0x7f040034;
+        public static final int hint=0x7f04003c;
         public static final int homeAsUp=0x7f040006;
         public static final int image_title=0x7f040039;
         public static final int listMode=0x7f040002;

@@ -292,13 +292,13 @@ int id abs__submit_area 0x7f04002f
 int id abs__textButton 0x7f040013
 int id abs__title 0x7f04001b
 int id abs__up 0x7f04000b
-int id back_to_select 0x7f04003c
 int id banner 0x7f040035
 int id change_difficulty 0x7f04003a
 int id change_speed 0x7f04003e
 int id disableHome 0x7f040009
 int id edit_query 0x7f040026
 int id gameview 0x7f040034
+int id hint 0x7f04003c
 int id homeAsUp 0x7f040006
 int id image_title 0x7f040039
 int id listMode 0x7f040002

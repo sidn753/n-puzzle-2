@@ -62,14 +62,18 @@ public class GamePlayActivity extends SherlockActivity implements DifficultyMana
     private MoveQueue mMoveQueue;
 
 	/**Number of seconds to countdown from during the preview*/
-	private final long PREVIEW_COUNTDOWN = 4;
+	private final long PREVIEW_COUNTDOWN = 4000;
+	private long millisUntilCountDownFinished = PREVIEW_COUNTDOWN;
 	private CountDownTimer mCountdown;
 
-    /**The placements of the tiles will be saved in this 2d array*/
+    /**The placements of the tiles*/
     private GameState mState = null;
     
     private boolean isMoveMakerRunning;
     private boolean isMoveMakerEmpty = false;
+    
+    /**is the hint image showing?*/
+    private boolean hinting = false;
 
 	private int mNumMoves;
 
@@ -121,9 +125,9 @@ public class GamePlayActivity extends SherlockActivity implements DifficultyMana
 			mPreviewImageView.setOnClickListener(new OnClickListener(){
 				@Override
 				public void onClick(View view) {
-					//TODO
 					Log.d(TAG, "preview image clicked");
-					parent.showGame();
+					parent.showGame(true);
+					hinting = false;
 				}
 			});
 		}
@@ -174,7 +178,6 @@ public class GamePlayActivity extends SherlockActivity implements DifficultyMana
 	private void imageNotFoundToast() {
 		Toast.makeText(this, "Sorry, couldn't fetch the image.", Toast.LENGTH_SHORT).show();
 	}
-
 	
 	/**Initialize and start the countdowntimer.
      * During the countdown, shuffle the image asynchronously.
@@ -182,12 +185,13 @@ public class GamePlayActivity extends SherlockActivity implements DifficultyMana
 	 */
 	private void startCountDown() {
         txt_countdown = (TextView)findViewById(R.id.txt_countdown);
-        txt_countdown.setText(Long.toString(PREVIEW_COUNTDOWN));
-        mCountdown = new CountDownTimer(PREVIEW_COUNTDOWN * 1000, 1000){
+        txt_countdown.setText(Long.toString(millisUntilCountDownFinished));
+        mCountdown = new CountDownTimer(millisUntilCountDownFinished, 1000){
 
         	@Override
-			public void onTick(long arg0) {
-				txt_countdown.setText(Long.toString(arg0/1000));	//update the countdown textview
+			public void onTick(long timeLeft) {
+        		millisUntilCountDownFinished = timeLeft;
+				txt_countdown.setText(Long.toString(timeLeft/1000));	//update the countdown textview
 			}
         	
 			@Override
@@ -224,7 +228,7 @@ public class GamePlayActivity extends SherlockActivity implements DifficultyMana
 //Start game
 /////////////////////////////////////////////////////////////////////////
 	private void startGame(){
-		showGame();
+		showGame(false);
 		
 		if(!DEBUG_GAMESTATE_CSV.equals("")){
 			mState = GameState.fromCSV(DEBUG_GAMESTATE_CSV);
@@ -241,11 +245,11 @@ public class GamePlayActivity extends SherlockActivity implements DifficultyMana
 		started = true;
 	}
 
-	private void showGame() {
+	private void showGame(boolean fromHint) {
 		setContentView(R.layout.activity_gameplay);
 		mLayout = (LinearLayout)findViewById(R.id.gameview);
 		
-		if(started){
+		if(fromHint){
 			mLayout.addView(mGameGrid);
 			if(mGameGrid.isSolved()) winGame();
 		}
@@ -388,6 +392,7 @@ public class GamePlayActivity extends SherlockActivity implements DifficultyMana
 ///////////////////////////////////////////////////////////////////////////
 //Options
 //////////////////////////////////////////////////////////////////////////
+    
 	@Override
 	/**The gameplay options menu allows you to:
 	 * 1) Reshuffle the game board.
@@ -404,10 +409,8 @@ public class GamePlayActivity extends SherlockActivity implements DifficultyMana
                 this.finish();
                 startActivity(restartIntent);
 				break;
-			case R.id.back_to_select:
-				stopMoveMaker();
-				mLayout.removeAllViews();
-				showImageHint();
+			case R.id.hint:
+				hintSelected();
 				break;
 			case R.id.change_difficulty:
 				changeDifficulty();
@@ -420,6 +423,22 @@ public class GamePlayActivity extends SherlockActivity implements DifficultyMana
 				break;
 		}
 		return true;
+	}
+
+	/**Show the hint image, or go back to the game if it's showing*/
+	private void hintSelected() {
+		if(!started) return;
+		
+		if(hinting){
+			showGame(true);
+			hinting = false;
+		}
+		else{
+			stopMoveMaker();
+			mLayout.removeAllViews();
+			showImageHint();
+			hinting = true;
+		}
 	}
 
 ///////////////////////////////////////////////////////////////////////////
@@ -580,10 +599,15 @@ public class GamePlayActivity extends SherlockActivity implements DifficultyMana
 	public void onConfigurationChanged(Configuration newConfig) {
 		super.onConfigurationChanged(newConfig);
 
-        mState = mGameGrid.getGameState();
-        mLayout.removeAllViews();
+        if(mGameGrid != null) mState = mGameGrid.getGameState();       
+        if(mLayout != null) mLayout.removeAllViews();
+        
         this.freeMemory();
-        this.startGame();
+        
+        if(started) this.startGame();
+        else{
+        	startCountDown();
+        }
 	}
 
 
