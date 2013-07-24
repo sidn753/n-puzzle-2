@@ -1,6 +1,5 @@
 package com.example.n_puzzle.Solver;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -42,7 +41,7 @@ public class MoveMaker implements Runnable{
         Log.d(TAG, "Initialized new Move Maker");
     }
     
-    /**Create a dialog to change the speed
+    /**Create a dialog to change the speed.
      * @param caller the calling activity
      */
     public static void changeSpeed(GamePlayActivity caller){

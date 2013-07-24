@@ -2,15 +2,14 @@ package com.example.n_puzzle;
 
 import java.util.ArrayList;
 
-import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Point;
 import android.graphics.drawable.BitmapDrawable;
 import android.util.Log;
-import android.view.DragEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.animation.AlphaAnimation;
 import android.widget.RelativeLayout;
 
 /**Data structure to hold a set of bitmap sections.
@@ -110,14 +109,20 @@ public class GameGrid extends RelativeLayout implements OnClickListener, View.On
 		Bitmap missingPiece = builder.buildImageSegment(mDivisions-1, mDivisions-1);
 		ImageSegmentView blankView = new ImageSegmentView(mContext, mDivisions-1, mDivisions-1, mDivisions * mDivisions -1);
 		blankView.setImageBitmap(missingPiece);
-
-		//ObjectAnimator.ofFloat(blankView, "alpha", 0).setDuration(0).start();
+		
+		final int DURATION = 1000;
+		AlphaAnimation fadeOut = new AlphaAnimation(1f, 0f);
+		fadeOut.setDuration(0);
+		fadeOut.setFillAfter(true);
+		blankView.startAnimation(fadeOut);
+		
 		LayoutParams params = getPlacementParams(mDivisions-1, mDivisions-1);
 		this.addView(blankView, params);
 		
-		final int DURATION = 1000;
-		
-		//ObjectAnimator.ofFloat(blankView, "alpha", 1).setDuration(DURATION).start();
+		AlphaAnimation fadeIn = new AlphaAnimation(0f, 1f);
+		fadeIn.setDuration(DURATION);
+		fadeIn.setFillAfter(true);
+		blankView.startAnimation(fadeIn);
 		
 	}
 	

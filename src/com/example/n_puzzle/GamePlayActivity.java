@@ -304,7 +304,7 @@ public class GamePlayActivity extends SherlockActivity implements DifficultyMana
         mMoveQueue.addAll(result.getMoveQueue());
         
         //If Solve it for me was clicked and we ran out of moves, restart the movemaker
-        if(isMoveMakerRunning && isMoveMakerEmpty){
+        if(isMoveMakerEmpty){
         	Log.d(TAG, "New moves added to movequeue, restarting movemaker");
         	startMoveMaker();
         }
@@ -388,12 +388,14 @@ public class GamePlayActivity extends SherlockActivity implements DifficultyMana
     /**Have the solver AI solve the game in real time
      */
     private void startMoveMaker() {
-    	if(isMoveMakerRunning) return;
+    	if(isMoveMakerRunning && !isMoveMakerEmpty) return;
     	
     	if(started){
+    		Log.d(TAG, "Starting MoveMaker");
 	        mGameGrid.setTouchEnabled(false);
 	        mMoveMaker = new MoveMaker(this, mMoveQueue);
 	        isMoveMakerRunning = true;
+	        isMoveMakerEmpty = false;
 	        mMoveMaker.run();
     	}
     }
@@ -473,7 +475,7 @@ public class GamePlayActivity extends SherlockActivity implements DifficultyMana
 	public void speedChanged(){
 		
 		if(isMoveMakerRunning){
-			mMoveMaker.stop();
+			stopMoveMaker();
 			startMoveMaker();
 		}
 	}

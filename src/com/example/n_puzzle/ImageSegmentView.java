@@ -1,7 +1,7 @@
 package com.example.n_puzzle;
 
 import android.content.Context;
-import android.graphics.Bitmap;
+import android.view.ViewDebug.ExportedProperty;
 import android.widget.ImageView;
 
 public class ImageSegmentView extends ImageView {
@@ -29,6 +29,13 @@ public class ImageSegmentView extends ImageView {
 
 	}
 	
+	@Override
+	@ExportedProperty(category = "drawing")
+	public float getAlpha() {
+		return super.getAlpha();
+	}
+
+
 	/**place the image in a different row or column
 	 * 
 	 * @param row the row to move to
