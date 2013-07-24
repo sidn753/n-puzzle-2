@@ -16,11 +16,14 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Locale;
 
+import com.actionbarsherlock.app.SherlockActivity;
+import com.actionbarsherlock.app.SherlockListActivity;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuItem;
+
 import com.example.n_puzzle.DifficultyManager.DifficultyManagerCaller;
 
-import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.ListActivity;
 import android.content.ContentResolver;
 import android.content.Intent;
 import android.content.res.Resources;
@@ -28,13 +31,11 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 
-public class ImageSelectionActivity extends ListActivity implements DifficultyManagerCaller{
+public class ImageSelectionActivity extends SherlockListActivity implements DifficultyManagerCaller{
 	public static final String TAG = ImageSelectionActivity.class.getSimpleName();
     final int REQUEST_CODE = 1;
 
@@ -154,7 +155,7 @@ public class ImageSelectionActivity extends ListActivity implements DifficultyMa
 	@Override	
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.image_select_menu, menu);
+		getSupportMenuInflater().inflate(R.menu.image_select_menu, menu);
 		return true;
 	}	
 	
@@ -213,7 +214,7 @@ public class ImageSelectionActivity extends ListActivity implements DifficultyMa
      */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == REQUEST_CODE && resultCode == Activity.RESULT_OK){
+        if (requestCode == REQUEST_CODE && resultCode == SherlockActivity.RESULT_OK){
 
             Intent intent = new Intent(this, GamePlayActivity.class);
             intent.setData(data.getData());
