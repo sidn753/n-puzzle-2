@@ -1,4 +1,4 @@
-package com.example.n_puzzle;
+package com.example.n_puzzle.Image_Manipulation;
 
 import android.content.Context;
 import android.view.ViewDebug.ExportedProperty;

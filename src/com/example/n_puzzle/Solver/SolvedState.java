@@ -1,6 +1,6 @@
 package com.example.n_puzzle.Solver;
 
-import com.example.n_puzzle.GameState;
+import com.example.n_puzzle.GameState.GameState;
 
 import java.util.ArrayList;
 

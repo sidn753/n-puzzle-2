@@ -1,4 +1,4 @@
-package com.example.n_puzzle;
+package com.example.n_puzzle.GameState;
 
 import java.util.ArrayList;
 import java.util.Arrays;

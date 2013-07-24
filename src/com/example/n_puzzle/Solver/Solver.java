@@ -10,7 +10,7 @@ import android.graphics.Point;
 import android.util.Log;
 
 import com.example.n_puzzle.GamePlayActivity;
-import com.example.n_puzzle.GameState;
+import com.example.n_puzzle.GameState.GameState;
 import com.example.n_puzzle.Solver.Heuristics.Heuristic;
 import com.example.n_puzzle.Solver.Heuristics.SolveLast6;
 

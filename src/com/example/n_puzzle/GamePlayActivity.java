@@ -21,6 +21,9 @@ import com.actionbarsherlock.view.MenuItem;
 import com.actionbarsherlock.view.MenuInflater;
 
 import com.example.n_puzzle.DifficultyManager.DifficultyManagerCaller;
+import com.example.n_puzzle.GameState.GameState;
+import com.example.n_puzzle.GameState.ShuffleTask;
+import com.example.n_puzzle.Image_Manipulation.GameGrid;
 import com.example.n_puzzle.Solver.Heuristics.Heuristic;
 import com.example.n_puzzle.Solver.Node;
 import com.example.n_puzzle.Solver.MoveMaker;
@@ -100,6 +103,10 @@ public class GamePlayActivity extends SherlockActivity implements DifficultyMana
 		setContentView(R.layout.activity_preview);
 		init();
         startCountDown();
+	}
+	
+	private void reshowPreview(){
+		setContentView(R.layout.activity_preview);
 	}
 
 	private void init() {
@@ -427,7 +434,7 @@ public class GamePlayActivity extends SherlockActivity implements DifficultyMana
         }
     }
 
-    void moveMade(){
+    public void moveMade(){
         mNumMoves++;
         if(DEBUG_VERBOSE) Log.d("movemade", "" + mNumMoves);
         mState = mGameGrid.getGameState();
@@ -486,7 +493,7 @@ public class GamePlayActivity extends SherlockActivity implements DifficultyMana
 /////////////////////////////////////////////////////////////////////////
 	/**Start the game over activity
 	 */
-	protected void winGame(){
+	public void winGame(){
         Toast.makeText(this, "Game Complete! It took " + mNumMoves +
                 " moves", Toast.LENGTH_LONG).show();
 

@@ -1,4 +1,9 @@
-package com.example.n_puzzle;
+package com.example.n_puzzle.GameState;
+
+import com.example.n_puzzle.GamePlayActivity;
+import com.example.n_puzzle.R;
+import com.example.n_puzzle.R.id;
+import com.example.n_puzzle.R.layout;
 
 import android.app.Activity;
 import android.content.Context;
@@ -10,7 +15,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 public class PreviewActivity extends Activity {
-	/**logcat tag*/
 	public static final String TAG = PreviewActivity.class.getSimpleName();
 
 	private String mPictureName;	/**The image name*/

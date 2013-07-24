@@ -1,6 +1,12 @@
-package com.example.n_puzzle;
+package com.example.n_puzzle.Image_Manipulation;
 
 import java.util.ArrayList;
+
+import com.example.n_puzzle.GamePlayActivity;
+import com.example.n_puzzle.R;
+import com.example.n_puzzle.GameState.GameState;
+import com.example.n_puzzle.GameState.GameState.Direction;
+import com.example.n_puzzle.R.drawable;
 
 import android.content.Context;
 import android.graphics.Bitmap;

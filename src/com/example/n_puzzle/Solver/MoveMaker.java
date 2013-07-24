@@ -9,8 +9,8 @@ import android.os.Handler;
 import android.util.Log;
 
 import com.example.n_puzzle.GamePlayActivity;
-import com.example.n_puzzle.GameState;
 import com.example.n_puzzle.R;
+import com.example.n_puzzle.GameState.GameState;
 
 /**
  * The movemaker is supplied with a queue of moves to make to

@@ -9,8 +9,8 @@ import java.util.Random;
 import android.graphics.Point;
 import android.util.Log;
 
-import com.example.n_puzzle.GameState;
-import com.example.n_puzzle.GameState.Direction;
+import com.example.n_puzzle.GameState.GameState;
+import com.example.n_puzzle.GameState.GameState.Direction;
 
 /**
  * Created by stepheno on 6/30/13.

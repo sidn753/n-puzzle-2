@@ -24,7 +24,7 @@
         </activity>
         
         <activity
-        	android:name = "com.example.n_puzzle.PreviewActivity"
+        	android:name = "com.example.n_puzzle.GameState.PreviewActivity"
         	android:label="@string/app_name">
         </activity>
         <activity

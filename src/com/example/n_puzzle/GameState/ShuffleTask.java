@@ -1,10 +1,12 @@
-package com.example.n_puzzle;
+package com.example.n_puzzle.GameState;
 
 import android.os.AsyncTask;
 import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.Random;
+
+import com.example.n_puzzle.GamePlayActivity;
 
 /**
  * Takes a gamestate, makes a random number of legal moves, returns the result.

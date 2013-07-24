@@ -2,7 +2,7 @@ package com.example.n_puzzle.Solver.Heuristics;
 
 import android.graphics.Point;
 
-import com.example.n_puzzle.GameState;
+import com.example.n_puzzle.GameState.GameState;
 import com.example.n_puzzle.Solver.MoveQueue;
 import com.example.n_puzzle.Solver.Node;
 
