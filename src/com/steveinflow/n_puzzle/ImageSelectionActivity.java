@@ -43,6 +43,7 @@ public class ImageSelectionActivity extends SherlockListActivity implements Diff
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+		getSupportActionBar().setTitle("");
 
 		//Get the picture names using reflection
 		ArrayList<String> pictureNames = getNames();
@@ -115,16 +116,23 @@ public class ImageSelectionActivity extends SherlockListActivity implements Diff
 
 	
 	/**reformat the image name- turn underscores into spaces and capitalize
-	 * the first letter.
+	 * the first letter of each word.
 	 * 
 	 * @param input original image name
 	 * @return a reformatted title for the image
 	 */
 	private String reformatImageName(String input) {
-		String output = input.replace("use_", "").replace("_", " ");
-		output = output.substring(0, 1).toUpperCase(Locale.getDefault())
-				+ output.substring(1);
-		return output;
+		String output = input.replace("use_", "");
+		String[] split = output.split("_");
+		StringBuffer result = new StringBuffer();
+		for(String s : split){
+			s = s.substring(0,1).toUpperCase(Locale.getDefault()) + s.substring(1);
+			result.append(s);
+			result.append(" ");
+		}
+		result.deleteCharAt(result.length()-1);
+		
+		return result.toString();
 	}
 	
 	/**Turn a formatted image name back into a valid resource name

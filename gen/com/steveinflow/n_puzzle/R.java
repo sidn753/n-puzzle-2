@@ -918,12 +918,11 @@ containing a value of this type.
         public static final int ic_launcher=0x7f020071;
         public static final int use_america=0x7f020072;
         public static final int use_baby_and_cat=0x7f020073;
-        public static final int use_couple=0x7f020074;
-        public static final int use_fifteen_puzzle=0x7f020075;
-        public static final int use_jordan=0x7f020076;
+        public static final int use_fifteen_puzzle=0x7f020074;
+        public static final int use_jordan=0x7f020075;
+        public static final int use_mona_lisa=0x7f020076;
         public static final int use_puppy=0x7f020077;
-        public static final int use_shark=0x7f020078;
-        public static final int use_wanderer=0x7f020079;
+        public static final int use_sunday_afternoon=0x7f020078;
     }
     public static final class id {
         public static final int abs__action_bar=0x7f040020;

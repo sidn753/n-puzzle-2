@@ -10,12 +10,12 @@
         android:title="@string/reshuffle" 
         android:visible="true" 
         android:enabled="true"
-        android:showAsAction="always"></item>
+        android:showAsAction="ifRoom"></item>
     <item android:id="@+id/hint"
         android:title="@string/show_hint" 
         android:visible="true" 
         android:enabled="true"
-        android:showAsAction="ifRoom"
+        android:showAsAction="always"
         ></item>
     <item android:id="@+id/solve"
         android:title="@string/solve_for_me"

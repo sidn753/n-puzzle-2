@@ -41,7 +41,9 @@ public class GamePlayActivity extends SherlockActivity implements DifficultyMana
 	/**Application-wide flag for more intense logging.*/
 	public static boolean DEBUG_VERBOSE = false;
 	
-	/**If this var isn't the empty string, the game will start with the given gamestate */
+	/**If this var isn't the empty string, the game will start with the given gamestate.
+	 * For debugging purposes only so be careful: it will crash the app if it's an invalid csv or 
+	 * if the difficulty does not match the last saved difficulty.*/
 	public static final String DEBUG_GAMESTATE_CSV = "";
 
 	/**Run the preview activity only if it hasn't been run before*/
@@ -81,6 +83,8 @@ public class GamePlayActivity extends SherlockActivity implements DifficultyMana
     @Override
 	protected void onCreate(Bundle savedInstanceState) {
         Log.d(TAG, "onCreate");
+        
+        getSupportActionBar().setTitle("");
 
         //Remove title bar
         //this.requestWindowFeature(Window.FEATURE_NO_TITLE);

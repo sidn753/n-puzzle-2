@@ -247,12 +247,11 @@ int drawable border 0x7f020070
 int drawable ic_launcher 0x7f020071
 int drawable use_america 0x7f020072
 int drawable use_baby_and_cat 0x7f020073
-int drawable use_couple 0x7f020074
-int drawable use_fifteen_puzzle 0x7f020075
-int drawable use_jordan 0x7f020076
+int drawable use_fifteen_puzzle 0x7f020074
+int drawable use_jordan 0x7f020075
+int drawable use_mona_lisa 0x7f020076
 int drawable use_puppy 0x7f020077
-int drawable use_shark 0x7f020078
-int drawable use_wanderer 0x7f020079
+int drawable use_sunday_afternoon 0x7f020078
 int id abs__action_bar 0x7f040020
 int id abs__action_bar_container 0x7f04001f
 int id abs__action_bar_subtitle 0x7f040011
