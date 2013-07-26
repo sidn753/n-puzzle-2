@@ -469,7 +469,7 @@ public class GamePlayActivity extends SherlockActivity implements DifficultyMana
 
             //check if the move is legal with the current gameState
             GameState gameState = mGameGrid.getGameState();
-            ArrayList<GameState.Direction> legalMoves = gameState.possibleMoves(null);
+            ArrayList<GameState.Direction> legalMoves = gameState.getLegalMoves(null);
             if(legalMoves.contains(move)){
                 mGameGrid.makeMove(move);
             }

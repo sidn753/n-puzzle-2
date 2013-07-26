@@ -37,7 +37,7 @@ public class ShuffleTask extends AsyncTask<GameState, Integer, GameState>{
         GameState endState = beginState;
 
         for(int i = 0; i < minShuffles; i++){
-            ArrayList<GameState.Direction> moves = endState.possibleMoves(null);
+            ArrayList<GameState.Direction> moves = endState.getLegalMoves(null);
             GameState.Direction move = moves.get(rand.nextInt(moves.size()));
             endState = endState.makeMove(move);
         }

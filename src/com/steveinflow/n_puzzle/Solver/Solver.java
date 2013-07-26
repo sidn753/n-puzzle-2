@@ -174,7 +174,7 @@ public class Solver {
         final GameState ancestorState = node.getBeginningState();
         final MoveQueue previousMoves = node.getMoveQueue();
         
-        ArrayList<GameState.Direction> legalMoves = previousState.possibleMoves((mFrozenTiles));
+        ArrayList<GameState.Direction> legalMoves = previousState.getLegalMoves((mFrozenTiles));
 
         if(last6){
         	Log.d(TAG, "adding successors for gamestate: " + previousState.toCSV());

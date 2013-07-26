@@ -227,7 +227,7 @@ public class GameState {
      * @param frozenTiles a list of tiles that should not be moved.
      * @return a list of moves that can legally be made from this gamestate.
      */
-    public ArrayList<Direction> possibleMoves(ArrayList<Point> frozenTiles){
+    public ArrayList<Direction> getLegalMoves(ArrayList<Point> frozenTiles){
         ArrayList<Direction> moves = new ArrayList<Direction>();
         if(frozenTiles == null) frozenTiles = new ArrayList<Point>();
 

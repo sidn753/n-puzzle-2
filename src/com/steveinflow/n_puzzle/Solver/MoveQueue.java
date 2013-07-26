@@ -70,7 +70,7 @@ public class MoveQueue implements Queue<GameState.Direction> {
 		
 		Log.d(TAG, "try " + tryCount + " for: \n" + endState.toString());
 		
-    	ArrayList<GameState.Direction> possibleMoves= endState.possibleMoves(frozenTiles);
+    	ArrayList<GameState.Direction> possibleMoves= endState.getLegalMoves(frozenTiles);
     	
     	int size = possibleMoves.size();
     	if(size == 0){
@@ -103,7 +103,7 @@ public class MoveQueue implements Queue<GameState.Direction> {
     public synchronized GameState addRandomMove(GameState beginState, ArrayList<Point> frozenTiles){
     	
     	GameState endState = this.getStateAfterMoves(beginState);
-    	ArrayList<GameState.Direction> possibleMoves= endState.possibleMoves(frozenTiles);
+    	ArrayList<GameState.Direction> possibleMoves= endState.getLegalMoves(frozenTiles);
     	
     	int size = possibleMoves.size();
     	if(size == 0){
