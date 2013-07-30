@@ -2,11 +2,8 @@ package com.steveinflow.n_puzzle.GameState;
 
 import com.steveinflow.n_puzzle.GamePlayActivity;
 import com.steveinflow.n_puzzle.R;
-import com.steveinflow.n_puzzle.R.id;
-import com.steveinflow.n_puzzle.R.layout;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;

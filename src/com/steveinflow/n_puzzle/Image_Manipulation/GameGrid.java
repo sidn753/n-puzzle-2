@@ -5,8 +5,6 @@ import java.util.ArrayList;
 import com.steveinflow.n_puzzle.GamePlayActivity;
 import com.steveinflow.n_puzzle.R;
 import com.steveinflow.n_puzzle.GameState.GameState;
-import com.steveinflow.n_puzzle.GameState.GameState.Direction;
-import com.steveinflow.n_puzzle.R.drawable;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -387,11 +385,6 @@ public class GameGrid extends RelativeLayout implements OnClickListener, View.On
             }
         }
         return new GameState(places);
-    }
-
-
-    private ImageSegmentView getSegment(int row, int col){
-        return mSegmentGrid[row][col];
     }
 
     public void setTouchEnabled(boolean enabled){

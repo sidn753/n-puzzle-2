@@ -25,8 +25,6 @@ public class BlankToTarget extends Heuristic {
     /**The direction adjacent to the target where we would like to place the blank tile*/
     private GameState.Direction mDirection;
 
-    private BlankToTarget(){}
-
     public BlankToTarget(int targetIndex, GameState.Direction direction){
         mTargetIndex = targetIndex;
         mDirection = direction;

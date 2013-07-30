@@ -1,4 +1,6 @@
 /*******************************************************************************
+ * This is the homescreen activity. It's a list of images to use for the game.
+ * 
  * Dynamically loads the names of the image views in /res/drawable using reflection.
  * Formats the names of the images and loads them into a listview.
  * When the user clicks a list item, opens the gameplay activity and 
@@ -9,9 +11,6 @@
 
 package com.steveinflow.n_puzzle;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Locale;
@@ -27,7 +26,6 @@ import android.app.AlertDialog;
 import android.content.ContentResolver;
 import android.content.Intent;
 import android.content.res.Resources;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;

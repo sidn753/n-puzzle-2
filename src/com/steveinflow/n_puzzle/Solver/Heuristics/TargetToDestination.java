@@ -23,8 +23,6 @@ public class TargetToDestination extends Heuristic {
     /**The location (row, column) where we'd like to move the target*/
     Point mDestination;
 
-    private TargetToDestination(){}
-
     public TargetToDestination(int targetIndex, Point destination){
         this.mTargetIndex = targetIndex;
         this.mDestination = destination;

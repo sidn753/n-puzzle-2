@@ -25,9 +25,6 @@ public class SolveGameTask extends AsyncTask<Integer, Long, Node> {
      */
     public static final long MAX_TIME_ALLOWED = 30000;
 
-    //hide default constructor
-    private SolveGameTask(){}
-
     public SolveGameTask(GamePlayActivity context, Heuristic heuristic,
             ArrayList<Point> frozenTiles, GameState gameState){
         mContext = context;
@@ -75,7 +72,7 @@ public class SolveGameTask extends AsyncTask<Integer, Long, Node> {
     @Override
     protected void onProgressUpdate(Long... values) {
         super.onProgressUpdate(values);
-        Long statesChecked = values[0];
+        //Long statesChecked = values[0];
         //Log.d(TAG, String.format("Solving... States Checked: %s", statesChecked));
     }
 

@@ -8,19 +8,24 @@ import com.steveinflow.n_puzzle.Solver.Node;
 
 import java.util.Comparator;
 
-/**
+/**A Heuristic is a way of comparing gamestates.
+ * 
  * Created by stepheno on 7/3/13.
  */
 public abstract class Heuristic implements Comparator<Node> {
+	
     @Override
+    /**Return which node is "better"*/
     public abstract int compare(Node futureState1, Node futureState2);
 
+    /**Return true if  the gamestate is a solution to the goal*/
     public abstract boolean checkIfSolved(Node gameState);
 
+    /**Plain English description of what this heuristic is aiming for*/
     public abstract String getDescription();
 
-
-    /**Determine the distance between two points.
+    /**Utility method to determine xy distance
+     * between two points.
      *
      * @return The Manhattan distance of the first location
      *      from the second location.

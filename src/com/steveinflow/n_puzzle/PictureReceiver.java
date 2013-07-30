@@ -6,7 +6,9 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 
-/**
+/**This is the receiver for the share image intent.
+ * Start the gameplay activity with the shared image.
+ * 
  * Created by stepheno on 6/23/13.
  */
 public class PictureReceiver extends Activity {

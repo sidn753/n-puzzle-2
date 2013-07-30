@@ -18,7 +18,6 @@ import java.util.ArrayList;
 public class SolutionStrategy {
 
     private static final String TAG = "SolutionStrategy";
-    private ArrayList<Heuristic> strategies;
     private final int ROW_LENGTH;
     private final int COL_LENGTH;
 

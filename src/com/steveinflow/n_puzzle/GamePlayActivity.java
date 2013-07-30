@@ -587,7 +587,7 @@ public class GamePlayActivity extends SherlockActivity implements DifficultyMana
 		startActivity(i);
 	}
 
-	/** free image memory when this activity finishes.	 */
+	/** free image memory when this activity finishes.*/
 	@Override
 	public void finish(){
 		freeMemory();
