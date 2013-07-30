@@ -86,9 +86,6 @@ public class GamePlayActivity extends SherlockActivity implements DifficultyMana
         
         getSupportActionBar().setTitle("");
 
-        //Remove title bar
-        //this.requestWindowFeature(Window.FEATURE_NO_TITLE);
-
 		super.onCreate(savedInstanceState);
 		startPreview();			
 	}

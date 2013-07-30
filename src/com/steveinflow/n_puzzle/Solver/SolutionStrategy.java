@@ -13,6 +13,9 @@ import com.steveinflow.n_puzzle.Solver.Heuristics.TargetToDestination;
 import java.util.ArrayList;
 
 /**
+ * The SolutionStrategy supplies the heuristics to solve 
+ * each goal in succession.
+ * 
  * Created by stepheno on 7/3/13.
  */
 public class SolutionStrategy {
@@ -72,6 +75,20 @@ public class SolutionStrategy {
     }
 
 
+    /**The main method of the solving algorithm.
+     * Determines what we need to do next.
+     * 
+     * Depending on the situation:
+     * -We may need to get the blank tile to our next target. 
+     * -We may need to move the target to its proper location 
+     * (or adjacent to its proper location for a
+     * line end maneuver). 
+     * -We may be down to the last 6 tiles and have to solve
+     * the rest by brute force.
+     * 
+     * @param gameState
+     * @return
+     */
     public Heuristic getNextGoal(GameState gameState){
         Heuristic nextHeuristic = null;
 
@@ -158,9 +175,11 @@ public class SolutionStrategy {
         return nextHeuristic;
     }
 
-    /**After every solved goal, we flip the moveBlank flag.
+    /**This is a callback called after a previous goal has been solved.
+     * 
+     * After every solved goal, we flip the moveBlank flag.
      * Before we try to move a tile to its proper location,
-     * we getByLocation the blank tile adjacent to it-
+     * we get the blank tile adjacent to it-
      * This makes it easier to move the tile.
      */
     public void processSolvedGoal(GameState gameState){
@@ -265,9 +284,6 @@ public class SolutionStrategy {
             }
 
         }
-        //Log.d(TAG, "Next index called, next index is " + indexToSolve);
-        
-        
 
     }
 

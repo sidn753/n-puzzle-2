@@ -10,7 +10,8 @@ import com.steveinflow.n_puzzle.Solver.Heuristics.Heuristic;
 
 import java.util.ArrayList;
 
-/**
+/**SolveGameTask is a background thread that wraps a Solver.
+ * 
  * Created by stepheno on 7/4/13.
  */
 public class SolveGameTask extends AsyncTask<Integer, Long, Node> {

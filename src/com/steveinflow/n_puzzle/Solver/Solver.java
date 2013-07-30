@@ -102,7 +102,6 @@ public class Solver {
             return originNode;
         }
 
-
         //Don't look at the opening state more than once
         addToVisitedStates(mBeginState);
 

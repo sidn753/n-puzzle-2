@@ -15,7 +15,7 @@ import com.steveinflow.n_puzzle.GameState.GameState;
 /**
  * The movemaker is supplied with a queue of moves to make to
  * solveGoal the game. It starts a thread that supplies the next move
- * every .5 seconds.
+ * with a selected delay.
  *
  * Created by stepheno on 6/30/13.
  */

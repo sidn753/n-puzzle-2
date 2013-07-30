@@ -1,8 +1,6 @@
 package com.steveinflow.n_puzzle;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.drawable.Drawable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,12 +11,14 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-/**
+/**An adapter for the ImageSelectionActivity.
+ * Image name with a thumbnail of the corresponding
+ * image beside it.
+ * 
  * Created by stepheno on 6/9/13.
  */
 public class ImageAndTitleAdapter extends BaseAdapter{
     private LayoutInflater mInflater;
-    private ArrayList<ImageView> images = new ArrayList<ImageView>();
     private Context mContext;
     private ArrayList<String> mPictureNames;
     private ArrayList<String> mRawPictureNames;
