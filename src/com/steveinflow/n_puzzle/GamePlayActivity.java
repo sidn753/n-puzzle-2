@@ -43,7 +43,7 @@ public class GamePlayActivity extends SherlockActivity implements DifficultyMana
 	
 	/**If this var isn't the empty string, the game will start with the given gamestate.
 	 * For debugging purposes only so be careful: it will crash the app if it's an invalid csv or 
-	 * if the difficulty does not match the last saved difficulty.*/
+	 * if the csv difficulty does not match the last saved difficulty.*/
 	public static final String DEBUG_GAMESTATE_CSV = "";
 
 	/**Run the preview activity only if it hasn't been run before*/
@@ -71,6 +71,7 @@ public class GamePlayActivity extends SherlockActivity implements DifficultyMana
     /**The placements of the tiles*/
     private GameState mState = null;
     
+    /**MoveMaker status-TODO encapsulate these in the MoveMaker class*/
     private boolean isMoveMakerRunning;
     private boolean isMoveMakerEmpty = false;
     
@@ -78,7 +79,6 @@ public class GamePlayActivity extends SherlockActivity implements DifficultyMana
     private boolean hinting = false;
 
 	private int mNumMoves;
-
 
     @Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -323,8 +323,7 @@ public class GamePlayActivity extends SherlockActivity implements DifficultyMana
 	        mSolveTask.execute();
         }
     }
-    
-   
+
     
     /**If the solver fails for some reason, we add a random move and try again. */
     public void solverFailed(){

@@ -104,6 +104,7 @@ public class ImageSelectionActivity extends SherlockListActivity implements Diff
 		return imageNamesList;
 	}
 
+	/**Get the names of the image resources before they were formatted*/
     private ArrayList<String> getRawNames(ArrayList<String> names){
         ArrayList<String> rawNames = new ArrayList<String>();
         for(String name : names){

@@ -33,7 +33,7 @@ public class Solver {
     /**Store visited states in a hashset to avoid looking at them twice.*/
     private Set<GameState> mVisitedStates;
 
-    /**These tiles are already solved and should not be moved. Dont
+    /**These tiles are already solved and should not be moved. Don't
      * consider any branches that result from moving these.*/
     private ArrayList<Point> mFrozenTiles;
 
@@ -64,7 +64,7 @@ public class Solver {
         Log.d(TAG, "Frozen Tiles: " + printFrozen());
     }
     
-    /**util method to print the current frozen tiles*/
+    /**debug method to print the current frozen tiles*/
     public String printFrozen(){
     	StringBuffer buffer = new StringBuffer();
     	for(Point p : mFrozenTiles){
@@ -74,18 +74,21 @@ public class Solver {
     	
     	return buffer.toString();
     }
-
-    public Status getStatus(){
-        return mStatus;
-    }
-
+    
     /**debug method to print all states that have been visited*/
     public void printVisited(){
     	for(GameState state : mVisitedStates){
     		Log.d(TAG, "visited " + state.toCSV());
     	}
     }
+
+    public Status getStatus(){
+        return mStatus;
+    }
     
+    /**Start solving. Expand the origin node and search until a solution is found.
+     * @return a node containing the solution state, and the MoveQueue to get there.
+     */
     public Node solveGoal(){
         mStatus = Status.SOLVING;
 
@@ -159,6 +162,8 @@ public class Solver {
         return nextNode;
     }
     
+    /**Adding a node to the hashset can cause an outofmemoryerror. Extracted
+     * this module to catch that error.  */
     public boolean addToVisitedStates(GameState gameState){
     	try{
         	mVisitedStates.add(gameState);
@@ -177,6 +182,9 @@ public class Solver {
     	return true;
     }
 
+    /**Expand the node by adding it's successors to the PQ.
+     * @param node the node to expand
+     */
     private void addSuccessors(Node node){
         final GameState previousState = node.getEndState();
         ArrayList<GameState.Direction> legalMoves = previousState.getLegalMoves((mFrozenTiles));
