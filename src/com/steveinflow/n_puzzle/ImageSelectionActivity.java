@@ -4,7 +4,7 @@
  * Dynamically loads the names of the image views in /res/drawable using reflection.
  * Formats the names of the images and loads them into a listview.
  * When the user clicks a list item, opens the gameplay activity and 
- * passes the image name.
+ * passes the image uri through the intent.
  *   
  * @author StephenO
  *******************************************************************************/
@@ -95,7 +95,7 @@ public class ImageSelectionActivity extends SherlockListActivity implements Diff
 		for(Field f : list){
 			String imgName = f.getName();
 			
-			//skip the ic_launcher and border graphic
+			//Images for use in the game are prefaced with "use_"
 			if(imgName.startsWith("use_")){				
                 imageNamesList.add(reformatImageName(imgName));
 			}
